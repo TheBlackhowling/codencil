@@ -14,7 +14,7 @@
 
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
-| P0.2 | `feature/p0.2-docker-stack` | `main` | *(opening)* | open |
+| P0.2 | `feature/p0.2-docker-stack` | `main` | [#3](https://github.com/TheBlackhowling/codencil/pull/3) | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
