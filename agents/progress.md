@@ -14,7 +14,7 @@
 
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
-| P0.3 | `feature/p0.3-migrate` | `main` | *(opening)* | open |
+| P0.3 | `feature/p0.3-migrate` | `main` | [#4](https://github.com/TheBlackhowling/codencil/pull/4) | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
