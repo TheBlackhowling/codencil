@@ -58,6 +58,11 @@
 
 ## Session log
 
+### 2026-06-10 — GitHub
+
+- Published planning docs to https://github.com/TheBlackhowling/codencil (MIT, public)
+- **Next agent:** start **P0.1**
+
 ### 2026-06-10 — Stack
 
 - **HTTP router:** chi v5 (≥ v5.2.4); not gin/echo

@@ -272,7 +272,7 @@ Use TypRow models with `Load`/`Insert`/`Update` for entities and `QueryAll[T]` f
 
 ## What is NOT started yet
 
-- [ ] GitHub repo `TheBlackHowling/codencil`
+- [ ] GitHub repo `TheBlackHowling/codencil` — **created** (planning docs only; CI in P5.3)
 - [ ] Initial migration + TypRow models
 - [ ] `internal/publish` anchor remapping prototype
 - [ ] Next.js margin-comment UI
