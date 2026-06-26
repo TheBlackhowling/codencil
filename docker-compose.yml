@@ -1,0 +1,62 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: codencil
+      POSTGRES_PASSWORD: codencil
+      POSTGRES_DB: codencil
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U codencil -d codencil"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    image: migrate/migrate:v4.18.2
+    volumes:
+      - ./db/migrations:/migrations:ro
+    environment:
+      DATABASE_URL: postgres://codencil:codencil@postgres:5432/codencil?sslmode=disable
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles:
+      - tools
+    entrypoint: ["migrate"]
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    volumes:
+      - ./apps/api:/app
+    working_dir: /app
+    environment:
+      DATABASE_URL: postgres://codencil:codencil@postgres:5432/codencil?sslmode=disable
+      PORT: "8080"
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["go", "version"]
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    volumes:
+      - ./apps/web:/app
+    working_dir: /app
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080
+    ports:
+      - "3000:3000"
+    command: ["node", "--version"]
+
+volumes:
+  postgres_data:
