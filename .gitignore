@@ -1,0 +1,28 @@
+# Env & secrets
+.env
+.env.*
+!.env.example
+
+# Go
+apps/api/bin/
+apps/api/tmp/
+*.exe
+*.test
+*.out
+coverage.out
+
+# Node / Next.js
+apps/web/node_modules/
+apps/web/.next/
+apps/web/out/
+apps/web/.turbo/
+
+# Docker
+*.log
+
+# OS & editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

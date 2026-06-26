@@ -1,0 +1,27 @@
+---
+description: Codencil agent workflow — read agents/ docs before implementing
+alwaysApply: true
+---
+
+# Codencil — AI agent workflow
+
+Before writing code, read the docs in **`agents/`** (in order):
+
+1. [`agents/CONTEXT.md`](agents/CONTEXT.md) — orientation
+2. [`agents/AGENTS.md`](agents/AGENTS.md) — rules & defaults
+3. [`agents/progress.md`](agents/progress.md) — pick **one** unchecked task
+4. [`agents/BUILD_ORDER.md`](agents/BUILD_ORDER.md) — task deliverables & verify steps
+5. [`agents/DECISIONS.md`](agents/DECISIONS.md) — when unsure *why*
+
+## Session rules
+
+- Execute **exactly one** `BUILD_ORDER` task ID per session (e.g. `P0.1`)
+- **Update** `agents/progress.md` before ending (checkboxes + session log)
+- **Do not** re-debate defaults in `AGENTS.md` (chi, MIT, TypRow, dev auth stub)
+- **Do not** implement approval gates, OIDC before Phase 4, or TypRow library changes
+- Anchors attach to **published version snapshots**, never live draft
+- **Docker only** — no local Go/Node/migrate; build, test, run via `docker compose` (P0.2)
+
+## Stack
+
+Go (**chi** v5) + Postgres + go-migrate + TypRow + Next.js (`apps/web`). All tooling in Docker. Markdown renders client-side only.
