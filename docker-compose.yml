@@ -41,7 +41,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    command: ["go", "version"]
+    command: ["go", "run", "./cmd/codencil"]
 
   web:
     build:
@@ -54,7 +54,7 @@ services:
       NEXT_PUBLIC_API_URL: http://localhost:8080
     ports:
       - "3000:3000"
-    command: ["node", "--version"]
+    command: ["sh", "-c", "npm install && npm run dev -- --hostname 0.0.0.0 -p 3000"]
 
 volumes:
   postgres_data:
