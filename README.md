@@ -10,6 +10,15 @@ Self-hosted markdown review platform — authors publish versioned documents; re
 
 **Dev requirement:** Docker + Docker Compose only (no local Go or Node needed).
 
+## Layout
+
+```
+apps/api/          Go module (github.com/TheBlackHowling/codencil/apps/api)
+apps/web/          Next.js frontend (Phase 0.5+)
+db/migrations/     go-migrate SQL files
+agents/            Planning & agent docs
+```
+
 ```
 Write in markdown. Review in the margin. Publish when it's ready.
 ```
