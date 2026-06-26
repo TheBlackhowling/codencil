@@ -8,16 +8,17 @@ alwaysApply: true
 Before writing code, read the docs in **`agents/`** (in order):
 
 1. [`agents/CONTEXT.md`](agents/CONTEXT.md) — orientation
-2. [`agents/AGENTS.md`](agents/AGENTS.md) — rules & defaults
-3. [`agents/progress.md`](agents/progress.md) — pick **one** unchecked task
-4. [`agents/STACK.md`](agents/STACK.md) — stacked branch/PR rules
+2. [`agents/progress.md`](agents/progress.md) — open stack + next task
+3. [`agents/STACK.md`](agents/STACK.md) — **check open PRs**; resume from `main` or stack tip
+4. [`agents/AGENTS.md`](agents/AGENTS.md) — rules & defaults
 5. [`agents/BUILD_ORDER.md`](agents/BUILD_ORDER.md) — task deliverables & verify steps
 6. [`agents/DECISIONS.md`](agents/DECISIONS.md) — when unsure *why*
 
 ## Session rules
 
+- **First:** `gh pr list --state open` — no open PRs → branch from `main`; else branch from **tip of stack** (see `STACK.md`)
 - Execute **exactly one** `BUILD_ORDER` task ID per session (e.g. `P0.1`)
-- **Stacked draft PRs:** branch from previous task; see `agents/STACK.md`; **do not merge**
+- **Stacked PRs:** open ready for review (no draft); see `agents/STACK.md`; **do not merge**
 - **Update** `agents/progress.md` (checkboxes + open stack table + session log)
 - **Do not** re-debate defaults in `AGENTS.md` (chi, MIT, TypRow, dev auth stub)
 - **Do not** implement approval gates, OIDC before Phase 4, or TypRow library changes
