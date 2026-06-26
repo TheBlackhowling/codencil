@@ -4,8 +4,8 @@
 > **Source of truth for "what's next"** — see `BUILD_ORDER.md` for task definitions.
 
 **Last updated:** 2026-06-10  
-**Current phase:** 1 (in progress)  
-**Next task:** **P1.3** — `internal/publish` diff scaffold  
+**Current phase:** 1 complete (stack open for merge)  
+**Next task:** **P2.1** — Migration: threads, comments, anchors  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
 ---
@@ -15,7 +15,11 @@
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
 | P1.1 | `feature/p1.1-documents-migration` | `main` | [#7](https://github.com/TheBlackhowling/codencil/pull/7) | open |
-| P1.2 | `feature/p1.2-typrow-store` | `feature/p1.1-documents-migration` | *(opening)* | open |
+| P1.2 | `feature/p1.2-typrow-store` | `feature/p1.1-documents-migration` | [#8](https://github.com/TheBlackhowling/codencil/pull/8) | open |
+| P1.3 | `feature/p1.3-publish-scaffold` | `feature/p1.2-typrow-store` | [#9](https://github.com/TheBlackhowling/codencil/pull/9) | open |
+| P1.4 | `feature/p1.4-document-api` | `feature/p1.3-publish-scaffold` | [#10](https://github.com/TheBlackhowling/codencil/pull/10) | open |
+| P1.5 | `feature/p1.5-web-preview` | `feature/p1.4-document-api` | [#11](https://github.com/TheBlackhowling/codencil/pull/11) | open |
+| P1.6 | `feature/p1.6-phase1-smoke` | `feature/p1.5-web-preview` | *(opening)* | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
@@ -35,10 +39,10 @@
 
 - [x] **P1.1** Migration: documents + versions
 - [x] **P1.2** TypRow models + store
-- [ ] **P1.3** `internal/publish` diff scaffold
-- [ ] **P1.4** HTTP: document CRUD + publish v1
-- [ ] **P1.5** Web: markdown preview page
-- [ ] **P1.6** Phase 1 smoke doc
+- [x] **P1.3** `internal/publish` diff scaffold
+- [x] **P1.4** HTTP: document CRUD + publish v1
+- [x] **P1.5** Web: markdown preview page
+- [x] **P1.6** Phase 1 smoke doc
 
 ## Phase 2 — Review path
 
@@ -72,80 +76,20 @@
 
 ## Session log
 
+### 2026-06-10 — Phase 1 read path (stack #7–#12)
+
+- P1.1: `000002_documents` migration
+- P1.2: TypRow document store + integration tests
+- P1.3: `internal/publish` line diff scaffold
+- P1.4: document CRUD + publish HTTP API
+- P1.5: Next.js markdown preview route
+- P1.6: `scripts/phase1-smoke.ps1`
+- **Next agent:** merge stack bottom → top, then **P2.1**
+
 ### 2026-06-10 — P0.5 Web skeleton
 
 - Next.js 15 App Router home page with NEXT_PUBLIC_API_URL display
 - Web dev service: npm install + next dev in compose
-- Verified: docker compose run web npm install && npm run build
-- **Next agent:** **P1.1** after Phase 0 stack merges
-
-### 2026-06-10 — P0.4 API skeleton
-
-- chi v5, GET /health, compose runs go run ./cmd/codencil
-- PR #5 stacked on #4; CI runs on all PR branches
-
-### 2026-06-10 — CI gate policy
-
-- Agents must verify `gh pr checks` pass before next BUILD_ORDER task
-- CI workflow runs on all pull_request events (stacked PRs included)
-
-### 2026-06-10 — P0.3 go-migrate wiring
-
-- Seed migration `000001_init` (no-op); removed migrate `tools` profile
-- Added `migrate-up`, `migrate-down`, `migrate-reset` to Makefile and `scripts/dev.ps1`
-- CI runs migrate up / down 1 / up when migration files exist
-- **Next agent:** **P0.4** API skeleton (chi, `/health`)
-
-### 2026-06-10 — P0.2 Docker Compose dev stack
-
-- Added `docker-compose.yml` (postgres, migrate, api, web)
-- Added `apps/api/Dockerfile`, `apps/web/Dockerfile`, `Makefile`, `scripts/dev.ps1`, `.env.example`
-- Verified: `docker compose build`, `docker compose run --rm api go version`, postgres healthy
-- **Next agent:** **P0.3** from `main` after P0.2 merges (or stack tip if PR open)
-
-### 2026-06-10 — PR workflow updates
-
-- No draft PRs — open ready for review
-- Resume rule: check open PRs; none → `main`, else branch from stack tip
-- Updated STACK.md, AGENTS.md, CONTRIBUTING.md, PR template
-
-### 2026-06-10 — P0.1 scaffold (stacked)
-
-- Branch `feature/p0.1-scaffold` from `feature/docs-stacked-pr-workflow`
-- Added `apps/api/go.mod`, module layout (`internal/*`, `cmd/codencil`, `db/migrations`, `apps/web` placeholders)
-- PR #2 stacked on docs PR #1
-- **Next agent:** **P0.2** on branch from `feature/p0.1-scaffold`
-
-### 2026-06-10 — Stacked PR workflow
-
-- Added `agents/STACK.md`; CONTRIBUTING/AGENTS/PR template updated for stacked PRs
-- Agents branch from previous task; maintainer merges bottom → top
-
-### 2026-06-10 — Contributing
-
-- Added `CONTRIBUTING.md`, PR template, Docker-based CI workflow, `CODEOWNERS`
-
-### 2026-06-10 — GitHub
-
-- Published planning docs to https://github.com/TheBlackhowling/codencil (MIT, public)
-- **Next agent:** start **P0.1**
-
-### 2026-06-10 — Stack
-
-- **HTTP router:** chi v5 (≥ v5.2.4); not gin/echo
-
-### 2026-06-10 — Planning (continued)
-
-- **Docker-only dev:** no local Go/Node; all build/test/run via Compose
-- **P0.2** expanded to full dev stack (Dockerfiles, api/web/migrate/postgres services)
-- P5.1 refocused to production compose + CI (dev compose is P0.2)
-
-### 2026-06-10 — Planning
-
-- Created agent doc set in `agents/` (`DECISIONS.md`, `CONTEXT.md`, `AGENTS.md`, `BUILD_ORDER.md`, `progress.md`)
-- Added `.cursor/rules/codencil-agents.mdc` pointing to `agents/`
-- Deferred formal approval workflow
-- **Next agent:** start **P0.1**
 
 ---
 
