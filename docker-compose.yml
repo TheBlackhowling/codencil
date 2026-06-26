@@ -41,7 +41,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    command: ["go", "version"]
+    command: ["go", "run", "./cmd/codencil"]
 
   web:
     build:

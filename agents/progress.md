@@ -5,7 +5,7 @@
 
 **Last updated:** 2026-06-10  
 **Current phase:** 0 (in progress)  
-**Next task:** **P0.4** — API skeleton  
+**Next task:** **P0.5** — Web skeleton  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
 ---
@@ -27,7 +27,7 @@
 - [x] **P0.1** Repo scaffold
 - [x] **P0.2** Docker Compose dev stack (Go + Node in containers)
 - [x] **P0.3** go-migrate wiring
-- [ ] **P0.4** API skeleton
+- [x] **P0.4** API skeleton
 - [ ] **P0.5** Web skeleton
 
 ## Phase 1 — Read path
