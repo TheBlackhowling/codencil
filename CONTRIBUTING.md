@@ -38,7 +38,8 @@ gh pr create --base feature/p0.1-scaffold --title "P0.2: Docker Compose dev stac
 3. Include the **BUILD_ORDER task ID** in the title (e.g. `P1.4: document publish API`)
 4. Update **`agents/progress.md`** (checkbox + **Open stack** table + session log)
 5. Run verification from [`agents/AGENTS.md`](agents/AGENTS.md) via Docker before opening the PR
-6. **Agents do not merge** — maintainer reviews and merges bottom-of-stack first
+6. **Verify CI passes** — `gh pr checks <number>`; fix failures on the same branch before starting the next task
+7. **Agents do not merge** — maintainer reviews and merges bottom-of-stack first
 
 ### PR title format (recommended)
 

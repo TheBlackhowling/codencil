@@ -29,6 +29,8 @@
 - [ ] `docker compose run --rm web npm run build` (if web touched)
 - [ ] Manual smoke (describe): 
 
+- [ ] CI passing: `gh pr checks <number>` (required before next task)
+
 ## Progress tracking
 
 - [ ] Updated `agents/progress.md` (task checkbox + session log)
