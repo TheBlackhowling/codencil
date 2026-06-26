@@ -30,11 +30,25 @@ jobs:
 
       - name: Run API tests
         if: hashFiles('docker-compose.yml') != '' && hashFiles('apps/api/go.mod') != ''
-        run: docker compose run --rm api go test ./...
+        run: |
+          docker compose run --rm --no-deps api sh -c '
+            if go list ./... 2>/dev/null | grep -q .; then
+              go test ./...
+            else
+              echo "No Go packages yet — skipping go test (expected before P0.4)"
+            fi
+          '
 
       - name: Run API vet
         if: hashFiles('docker-compose.yml') != '' && hashFiles('apps/api/go.mod') != ''
-        run: docker compose run --rm api go vet ./...
+        run: |
+          docker compose run --rm --no-deps api sh -c '
+            if go list ./... 2>/dev/null | grep -q .; then
+              go vet ./...
+            else
+              echo "No Go packages yet — skipping go vet (expected before P0.4)"
+            fi
+          '
 
       - name: Build web
         if: hashFiles('docker-compose.yml') != '' && hashFiles('apps/web/package.json') != ''
