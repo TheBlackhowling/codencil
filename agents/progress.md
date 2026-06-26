@@ -19,7 +19,7 @@
 | P1.3 | `feature/p1.3-publish-scaffold` | `feature/p1.2-typrow-store` | [#9](https://github.com/TheBlackhowling/codencil/pull/9) | open |
 | P1.4 | `feature/p1.4-document-api` | `feature/p1.3-publish-scaffold` | [#10](https://github.com/TheBlackhowling/codencil/pull/10) | open |
 | P1.5 | `feature/p1.5-web-preview` | `feature/p1.4-document-api` | [#11](https://github.com/TheBlackhowling/codencil/pull/11) | open |
-| P1.6 | `feature/p1.6-phase1-smoke` | `feature/p1.5-web-preview` | *(opening)* | open |
+| P1.6 | `feature/p1.6-phase1-smoke` | `feature/p1.5-web-preview` | [#12](https://github.com/TheBlackhowling/codencil/pull/12) | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
