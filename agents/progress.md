@@ -52,11 +52,15 @@
 
 - [ ] **P5.1** Production compose + CI
 - [ ] **P5.2** README self-host guide
-- [ ] **P5.3** GitHub publish
+- [ ] **P5.3** GitHub publish — repo live; CI on PRs; branch protection optional
 
 ---
 
 ## Session log
+
+### 2026-06-10 — Contributing
+
+- Added `CONTRIBUTING.md`, PR template, Docker-based CI workflow, `CODEOWNERS`
 
 ### 2026-06-10 — GitHub
 

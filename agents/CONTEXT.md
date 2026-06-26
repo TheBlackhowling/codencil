@@ -33,6 +33,7 @@ Orientation doc for new sessions. **Read this first**, then follow links based o
 | `AGENTS.md` | How to work in this repo; verification; anti-patterns |
 | `progress.md` | Living checklist — **update at end of every session** |
 | `../README.md` | Public-facing project intro (create at Phase 0) |
+| `../CONTRIBUTING.md` | Branch workflow, PR rules, verification |
 
 ---
 

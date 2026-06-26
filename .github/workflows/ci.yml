@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify agent documentation
+        run: |
+          test -f agents/AGENTS.md
+          test -f agents/BUILD_ORDER.md
+          test -f agents/progress.md
+          test -f CONTRIBUTING.md
+
+      - name: Validate Docker Compose config
+        if: hashFiles('docker-compose.yml') != ''
+        run: docker compose config
+
+      - name: Build images
+        if: hashFiles('docker-compose.yml') != ''
+        run: docker compose build
+
+      - name: Run API tests
+        if: hashFiles('apps/api/go.mod') != ''
+        run: docker compose run --rm api go test ./...
+
+      - name: Run API vet
+        if: hashFiles('apps/api/go.mod') != ''
+        run: docker compose run --rm api go vet ./...
+
+      - name: Build web
+        if: hashFiles('apps/web/package.json') != ''
+        run: docker compose run --rm web npm run build

@@ -18,6 +18,7 @@ Before writing code, read the docs in **`agents/`** (in order):
 - Execute **exactly one** `BUILD_ORDER` task ID per session (e.g. `P0.1`)
 - **Update** `agents/progress.md` before ending (checkboxes + session log)
 - **Do not** re-debate defaults in `AGENTS.md` (chi, MIT, TypRow, dev auth stub)
+- **PRs:** one BUILD_ORDER task per PR; see `CONTRIBUTING.md`
 - **Do not** implement approval gates, OIDC before Phase 4, or TypRow library changes
 - Anchors attach to **published version snapshots**, never live draft
 - **Docker only** — no local Go/Node/migrate; build, test, run via `docker compose` (P0.2)

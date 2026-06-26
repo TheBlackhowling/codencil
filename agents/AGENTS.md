@@ -140,6 +140,15 @@ docker compose run --rm web npm run build
 
 ---
 
+## Pull requests
+
+- One **`BUILD_ORDER` task per PR** — see [`CONTRIBUTING.md`](../CONTRIBUTING.md)
+- Use the [PR template](../.github/pull_request_template.md); include task ID (e.g. `P1.4`)
+- Update **`agents/progress.md`** in the same PR when implementation work completes
+- CI (`.github/workflows/ci.yml`) runs Docker-based checks when compose/app code exist
+
+---
+
 ## Session prompt template
 
 Copy into a new agent chat:

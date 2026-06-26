@@ -6,6 +6,8 @@ Self-hosted markdown review platform — authors publish versioned documents; re
 
 **License:** [MIT](LICENSE)
 
+**Contributing:** see [CONTRIBUTING.md](CONTRIBUTING.md) — one BUILD_ORDER task per PR, Docker-only verify.
+
 **Dev requirement:** Docker + Docker Compose only (no local Go or Node needed).
 
 ```
