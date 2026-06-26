@@ -16,7 +16,7 @@
 |---|---|---|---|---|
 | P0.3 | `feature/p0.3-migrate` | `main` | [#4](https://github.com/TheBlackhowling/codencil/pull/4) | open |
 | P0.4 | `feature/p0.4-api-skeleton` | `feature/p0.3-migrate` | [#5](https://github.com/TheBlackhowling/codencil/pull/5) | open |
-| P0.5 | `feature/p0.5-web-skeleton` | `feature/p0.4-api-skeleton` | *(opening)* | open |
+| P0.5 | `feature/p0.5-web-skeleton` | `feature/p0.4-api-skeleton` | [#6](https://github.com/TheBlackhowling/codencil/pull/6) | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
