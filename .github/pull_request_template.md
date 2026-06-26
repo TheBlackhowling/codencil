@@ -4,6 +4,12 @@
 
 **Task ID:**
 
+## Stack
+
+**Branch:** `feature/p0.2-docker-stack`  
+**PR base:** `feature/p0.1-scaffold` *(or `main` if first in stack)*  
+**Draft:** yes *(leave draft until maintainer review)*
+
 ## Summary
 
 <!-- What does this PR do? One BUILD_ORDER task only. -->

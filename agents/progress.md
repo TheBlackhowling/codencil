@@ -5,7 +5,18 @@
 
 **Last updated:** 2026-06-10  
 **Current phase:** 0 (not started)  
-**Next task:** **P0.1** — Repo scaffold
+**Next task:** **P0.1** — Repo scaffold  
+**Stack policy:** Stacked draft PRs — see [`STACK.md`](STACK.md)
+
+---
+
+## Open stack (branches & PRs)
+
+| Task | Branch | PR base | PR | Status |
+|---|---|---|---|---|
+| *(none yet)* | | | | |
+
+*Agents: add a row when opening each draft PR. Remove or mark merged after maintainer merge.*
 
 ---
 
@@ -57,6 +68,11 @@
 ---
 
 ## Session log
+
+### 2026-06-10 — Stacked PR workflow
+
+- Added `agents/STACK.md`; CONTRIBUTING/AGENTS/PR template updated for draft stacked PRs
+- Agents branch from previous task; maintainer merges bottom → top
 
 ### 2026-06-10 — Contributing
 

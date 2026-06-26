@@ -16,8 +16,9 @@ Orientation doc for new sessions. **Read this first**, then follow links based o
 | 1 | **`CONTEXT.md`** (this file) | Always — orientation |
 | 2 | **`AGENTS.md`** | Before writing code — rules & defaults |
 | 3 | **`DECISIONS.md`** | When unsure *why* — architecture & product |
-| 4 | **`BUILD_ORDER.md`** | Before implementing — *what* to do next |
-| 5 | **`agents/progress.md`** | Check/update task status |
+| 4 | **`STACK.md`** | Stacked branches & draft PR rules |
+| 5 | **`BUILD_ORDER.md`** | Before implementing — *what* to do next |
+| 6 | **`progress.md`** | Task status + **open stack** table |
 
 **Do not** start a task marked 🔒 blocked or ✅ done in `agents/progress.md`.
 
@@ -29,6 +30,7 @@ Orientation doc for new sessions. **Read this first**, then follow links based o
 |---|---|
 | [`README.md`](./README.md) | Index (this folder) |
 | `DECISIONS.md` | Stable product/architecture decisions (change rarely) |
+| `STACK.md` | Stacked branches & draft PR workflow |
 | `BUILD_ORDER.md` | Phased implementation plan (granular agent tasks) |
 | `AGENTS.md` | How to work in this repo; verification; anti-patterns |
 | `progress.md` | Living checklist — **update at end of every session** |

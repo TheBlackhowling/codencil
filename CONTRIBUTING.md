@@ -8,20 +8,34 @@ Thanks for your interest in Codencil. This project is early-stage; most work is 
 2. Check [`agents/progress.md`](agents/progress.md) for the next task
 3. **Docker required** — build, test, and migrate run via Docker Compose only (no local Go/Node needed)
 
-## Branch workflow
+## Branch workflow (stacked PRs)
 
-- Branch from **`main`**
-- Name branches: `feature/p0.2-docker-stack`, `feature/p1.4-publish-api`, etc.
-- **One BUILD_ORDER task per PR** (e.g. `P1.4` only — no drive-by refactors)
-- Keep PRs small and reviewable
+Codencil uses **stacked branches** so work continues without waiting for merge. Full guide: [`agents/STACK.md`](agents/STACK.md).
+
+| Rule | Detail |
+|---|---|
+| **First task in stack** | Branch from `main` → PR base **`main`** |
+| **Next tasks** | Branch from **previous feature branch** → PR base **that branch** |
+| **Draft PRs** | Open as **draft**; maintainer merges in order after batch review |
+| **Naming** | `feature/p0.1-scaffold`, `feature/p0.2-docker-stack`, … |
+| **One task per PR** | No combining BUILD_ORDER tasks |
+
+```bash
+# Stacked example: P0.2 after P0.1
+git checkout feature/p0.1-scaffold && git pull
+git checkout -b feature/p0.2-docker-stack
+git push -u origin feature/p0.2-docker-stack
+gh pr create --base feature/p0.1-scaffold --draft --title "P0.2: Docker Compose dev stack"
+```
 
 ## Pull requests
 
-1. Open a PR against **`main`**
-2. Fill out the [PR template](.github/pull_request_template.md) completely
-3. Include the **BUILD_ORDER task ID** in the title or description (e.g. `P1.4: document publish API`)
-4. Update **`agents/progress.md`** in the same PR (checkbox + session log) when implementation work is done
-5. Run verification from [`agents/AGENTS.md`](agents/AGENTS.md) via Docker before requesting review
+1. Open a **draft** PR (see stack rules above for base branch)
+2. Fill out the [PR template](.github/pull_request_template.md) completely — include **PR base branch**
+3. Include the **BUILD_ORDER task ID** in the title (e.g. `P1.4: document publish API`)
+4. Update **`agents/progress.md`** (checkbox + **Open stack** table + session log)
+5. Run verification from [`agents/AGENTS.md`](agents/AGENTS.md) via Docker before marking PR ready
+6. **Agents do not merge** — maintainer reviews and merges bottom-of-stack first
 
 ### PR title format (recommended)
 
