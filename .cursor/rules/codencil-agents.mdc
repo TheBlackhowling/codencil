@@ -19,6 +19,7 @@ Before writing code, read the docs in **`agents/`** (in order):
 - **First:** `gh pr list --state open` — no open PRs → branch from `main`; else branch from **tip of stack** (see `STACK.md`)
 - Execute **exactly one** `BUILD_ORDER` task ID per session (e.g. `P0.1`)
 - **Stacked PRs:** open ready for review (no draft); see `agents/STACK.md`; **do not merge**
+- **CI gate:** `gh pr checks <number>` must pass before starting the next BUILD_ORDER task
 - **Update** `agents/progress.md` (checkboxes + open stack table + session log)
 - **Do not** re-debate defaults in `AGENTS.md` (chi, MIT, TypRow, dev auth stub)
 - **Do not** implement approval gates, OIDC before Phase 4, or TypRow library changes

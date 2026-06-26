@@ -4,7 +4,6 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
 
 jobs:
   ci:
@@ -50,6 +49,14 @@ jobs:
             fi
           '
 
+      - name: Run migrations
+        if: hashFiles('docker-compose.yml') != '' && hashFiles('db/migrations/*.up.sql') != ''
+        run: |
+          docker compose up -d postgres
+          docker compose run --rm migrate -path /migrations -database "postgres://codencil:codencil@postgres:5432/codencil?sslmode=disable" up
+          docker compose run --rm migrate -path /migrations -database "postgres://codencil:codencil@postgres:5432/codencil?sslmode=disable" down 1
+          docker compose run --rm migrate -path /migrations -database "postgres://codencil:codencil@postgres:5432/codencil?sslmode=disable" up
+
       - name: Build web
         if: hashFiles('docker-compose.yml') != '' && hashFiles('apps/web/package.json') != ''
-        run: docker compose run --rm web npm run build
+        run: docker compose run --rm web sh -c "npm install && npm run build"

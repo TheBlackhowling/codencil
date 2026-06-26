@@ -14,6 +14,7 @@ Single source of truth for **how AI agents implement Codencil**. Read with `BUIL
 - **One task per session** — pick exactly one task from `BUILD_ORDER.md`; finish or clearly partial with progress update
 - **No scope creep** — if the task is "publish v1 API", do not add comments, auth, or Docker polish unless the task includes it
 - **Docker-only host** — no Go, Node, npm, or migrate on the developer machine. **All** build, test, migrate, and run commands go through **Docker Compose** (see P0.2)
+- **CI must pass before next task** — after opening a PR, run `gh pr checks <number>` and wait for green; if CI fails, fix on the same branch and push until checks pass; **do not start the next BUILD_ORDER task** until the current PR's CI is green
 
 ---
 
@@ -140,6 +141,7 @@ docker compose run --rm web npm run build
 | Run `go test` / `npm` on host | `docker compose run --rm api go test ./...` |
 | Assume local Go/Node installed | Docker-only; see P0.2 |
 | Skip `agents/progress.md` update | Always hand off next agent |
+| Start next task while current PR CI is failing | Fix CI on same branch; verify `gh pr checks` pass first |
 
 ---
 
@@ -153,6 +155,7 @@ Full workflow: [`agents/STACK.md`](STACK.md)
 - **Open PRs** → branch from **tip of stack** (last completed task branch), PR base = that branch
 - **One `BUILD_ORDER` task per branch/PR** — open ready for review; **do not merge**
 - Update **`agents/progress.md`** Open stack table + session log
+- **CI gate:** after push, `gh pr checks <number>` — all checks must **pass** before starting the next task; fix failures on the same branch and re-push
 - Use [PR template](../.github/pull_request_template.md); CI runs per PR
 
 ---
@@ -171,7 +174,8 @@ Working on Codencil at C:\source\codencil.
 3. Execute BUILD_ORDER task: [TASK ID]
 4. Open PR ready for review (base = main or tip branch; no `--draft`)
 5. Update agents/progress.md open stack table
-6. Do not merge
+6. Verify CI: gh pr checks <number> — must pass before next task
+7. Do not merge
 ```
 
 ---

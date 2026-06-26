@@ -4,8 +4,8 @@
 > **Source of truth for "what's next"** — see `BUILD_ORDER.md` for task definitions.
 
 **Last updated:** 2026-06-10  
-**Current phase:** 0 (in progress)  
-**Next task:** **P0.3** — go-migrate wiring  
+**Current phase:** 0 complete (pending stack merge)  
+**Next task:** **P1.1** — Migration: documents + versions  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
 ---
@@ -14,7 +14,9 @@
 
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
-| P0.2 | `feature/p0.2-docker-stack` | `main` | [#3](https://github.com/TheBlackhowling/codencil/pull/3) | open |
+| P0.3 | `feature/p0.3-migrate` | `main` | [#4](https://github.com/TheBlackhowling/codencil/pull/4) | open |
+| P0.4 | `feature/p0.4-api-skeleton` | `feature/p0.3-migrate` | [#5](https://github.com/TheBlackhowling/codencil/pull/5) | open |
+| P0.5 | `feature/p0.5-web-skeleton` | `feature/p0.4-api-skeleton` | [#6](https://github.com/TheBlackhowling/codencil/pull/6) | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
@@ -26,9 +28,9 @@
 
 - [x] **P0.1** Repo scaffold
 - [x] **P0.2** Docker Compose dev stack (Go + Node in containers)
-- [ ] **P0.3** go-migrate wiring
-- [ ] **P0.4** API skeleton
-- [ ] **P0.5** Web skeleton
+- [x] **P0.3** go-migrate wiring
+- [x] **P0.4** API skeleton
+- [x] **P0.5** Web skeleton
 
 ## Phase 1 — Read path
 
@@ -70,6 +72,30 @@
 ---
 
 ## Session log
+
+### 2026-06-10 — P0.5 Web skeleton
+
+- Next.js 15 App Router home page with NEXT_PUBLIC_API_URL display
+- Web dev service: npm install + next dev in compose
+- Verified: docker compose run web npm install && npm run build
+- **Next agent:** **P1.1** after Phase 0 stack merges
+
+### 2026-06-10 — P0.4 API skeleton
+
+- chi v5, GET /health, compose runs go run ./cmd/codencil
+- PR #5 stacked on #4; CI runs on all PR branches
+
+### 2026-06-10 — CI gate policy
+
+- Agents must verify `gh pr checks` pass before next BUILD_ORDER task
+- CI workflow runs on all pull_request events (stacked PRs included)
+
+### 2026-06-10 — P0.3 go-migrate wiring
+
+- Seed migration `000001_init` (no-op); removed migrate `tools` profile
+- Added `migrate-up`, `migrate-down`, `migrate-reset` to Makefile and `scripts/dev.ps1`
+- CI runs migrate up / down 1 / up when migration files exist
+- **Next agent:** **P0.4** API skeleton (chi, `/health`)
 
 ### 2026-06-10 — P0.2 Docker Compose dev stack
 

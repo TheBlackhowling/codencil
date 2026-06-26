@@ -126,6 +126,19 @@ In **`progress.md`**:
 - Check off task when work is complete
 - Add row to **Open stack** table (branch, PR base, PR URL, status)
 
+### 6. Verify CI before next task
+
+```bash
+gh pr checks <pr-number>
+```
+
+| CI status | Action |
+|---|---|
+| **All pass** | OK to start the **next** BUILD_ORDER task (stack on tip branch) |
+| **Any failing** | Fix on the **same branch**, push, re-check until green — **do not** open the next task PR |
+
+Re-run after each push; CI may take 30–60s to finish.
+
 ---
 
 ## Maintainer: mass review
@@ -169,4 +182,4 @@ CI runs on each PR against its **base branch**. Stacked PRs validate incremental
 | Open PRs as **draft** | Open ready for review |
 | Merge your own PRs | Leave open for maintainer |
 | Skip updating stack table in `progress.md` | Always record branch + PR link |
-| Start from `main` while stack is open | Resume from **tip** branch |
+| Start next task while current PR CI failing | Fix on same branch until `gh pr checks` pass |
