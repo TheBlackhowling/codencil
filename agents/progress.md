@@ -15,7 +15,7 @@
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
 | docs (stack workflow) | `feature/docs-stacked-pr-workflow` | `main` | [#1](https://github.com/TheBlackhowling/codencil/pull/1) | draft |
-| P0.1 | `feature/p0.1-scaffold` | `feature/docs-stacked-pr-workflow` | *(opening)* | draft |
+| P0.1 | `feature/p0.1-scaffold` | `feature/docs-stacked-pr-workflow` | [#2](https://github.com/TheBlackhowling/codencil/pull/2) | draft |
 
 *Agents: add a row when opening each draft PR. Remove or mark merged after maintainer merge.*
 
