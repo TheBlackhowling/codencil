@@ -6,6 +6,7 @@ All planning and agent workflow docs live here. Cursor rules point to this folde
 |---|---|
 | [CONTEXT.md](./CONTEXT.md) | Read first — orientation & doc map |
 | [AGENTS.md](./AGENTS.md) | Rules, defaults, verification |
+| [`STACK.md`](./STACK.md) | Stacked branches & PR workflow |
 | [BUILD_ORDER.md](./BUILD_ORDER.md) | Phased tasks (P0.1 … P5.3) |
 | [DECISIONS.md](./DECISIONS.md) | Product & architecture decisions |
 | [progress.md](./progress.md) | Living checklist — update every session |

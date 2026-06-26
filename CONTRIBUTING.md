@@ -5,23 +5,40 @@ Thanks for your interest in Codencil. This project is early-stage; most work is 
 ## Before you start
 
 1. Read [`agents/CONTEXT.md`](agents/CONTEXT.md) and [`agents/AGENTS.md`](agents/AGENTS.md)
-2. Check [`agents/progress.md`](agents/progress.md) for the next task
-3. **Docker required** — build, test, and migrate run via Docker Compose only (no local Go/Node needed)
+2. **Check open PRs:** `gh pr list --state open` and [`agents/progress.md`](agents/progress.md) stack table
+3. **Resume:** no open PRs → branch from `main`; open stack → branch from **tip** (see [`agents/STACK.md`](agents/STACK.md))
+4. Pick the next unchecked task in `progress.md`
+5. **Docker required** — build, test, and migrate run via Docker Compose only (no local Go/Node needed)
 
-## Branch workflow
+## Branch workflow (stacked PRs)
 
-- Branch from **`main`**
-- Name branches: `feature/p0.2-docker-stack`, `feature/p1.4-publish-api`, etc.
-- **One BUILD_ORDER task per PR** (e.g. `P1.4` only — no drive-by refactors)
-- Keep PRs small and reviewable
+Codencil uses **stacked branches** so work continues without waiting for merge. Full guide: [`agents/STACK.md`](agents/STACK.md).
+
+| Rule | Detail |
+|---|---|
+| **Start session** | `gh pr list --state open` — no PRs → `main`; else branch from **stack tip** |
+| **First task (empty stack)** | Branch from `main` → PR base **`main`** |
+| **Next tasks** | Branch from **tip branch** → PR base **tip branch** |
+| **PRs** | Open **ready for review** (not draft); maintainer merges in order |
+| **Naming** | `feature/p0.1-scaffold`, `feature/p0.2-docker-stack`, … |
+| **One task per PR** | No combining BUILD_ORDER tasks |
+
+```bash
+# Stacked example: P0.2 after P0.1
+git checkout feature/p0.1-scaffold && git pull
+git checkout -b feature/p0.2-docker-stack
+git push -u origin feature/p0.2-docker-stack
+gh pr create --base feature/p0.1-scaffold --title "P0.2: Docker Compose dev stack"
+```
 
 ## Pull requests
 
-1. Open a PR against **`main`**
-2. Fill out the [PR template](.github/pull_request_template.md) completely
-3. Include the **BUILD_ORDER task ID** in the title or description (e.g. `P1.4: document publish API`)
-4. Update **`agents/progress.md`** in the same PR (checkbox + session log) when implementation work is done
-5. Run verification from [`agents/AGENTS.md`](agents/AGENTS.md) via Docker before requesting review
+1. Open a PR ready for review (see stack rules above for base branch; no `--draft`)
+2. Fill out the [PR template](.github/pull_request_template.md) completely — include **PR base branch**
+3. Include the **BUILD_ORDER task ID** in the title (e.g. `P1.4: document publish API`)
+4. Update **`agents/progress.md`** (checkbox + **Open stack** table + session log)
+5. Run verification from [`agents/AGENTS.md`](agents/AGENTS.md) via Docker before opening the PR
+6. **Agents do not merge** — maintainer reviews and merges bottom-of-stack first
 
 ### PR title format (recommended)
 

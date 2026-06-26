@@ -4,14 +4,28 @@
 > **Source of truth for "what's next"** — see `BUILD_ORDER.md` for task definitions.
 
 **Last updated:** 2026-06-10  
-**Current phase:** 0 (not started)  
-**Next task:** **P0.1** — Repo scaffold
+**Current phase:** 0 (in progress)  
+**Next task:** **P0.2** — Docker Compose dev stack  
+**Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
+
+---
+
+## Open stack (branches & PRs)
+
+| Task | Branch | PR base | PR | Status |
+|---|---|---|---|---|
+| docs (stack workflow) | `feature/docs-stacked-pr-workflow` | `main` | [#1](https://github.com/TheBlackhowling/codencil/pull/1) | open |
+| P0.1 | `feature/p0.1-scaffold` | `feature/docs-stacked-pr-workflow` | [#2](https://github.com/TheBlackhowling/codencil/pull/2) | merged |
+
+*Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
+
+**Resume rule:** at session start, run `gh pr list --state open`. No open PRs → `main`. Otherwise → checkout **tip** branch (`feature/docs-stacked-pr-workflow` until #1 merges).
 
 ---
 
 ## Phase 0 — Project shell
 
-- [ ] **P0.1** Repo scaffold
+- [x] **P0.1** Repo scaffold
 - [ ] **P0.2** Docker Compose dev stack (Go + Node in containers)
 - [ ] **P0.3** go-migrate wiring
 - [ ] **P0.4** API skeleton
@@ -57,6 +71,24 @@
 ---
 
 ## Session log
+
+### 2026-06-10 — PR workflow updates
+
+- No draft PRs — open ready for review
+- Resume rule: check open PRs; none → `main`, else branch from stack tip
+- Updated STACK.md, AGENTS.md, CONTRIBUTING.md, PR template
+
+### 2026-06-10 — P0.1 scaffold (stacked)
+
+- Branch `feature/p0.1-scaffold` from `feature/docs-stacked-pr-workflow`
+- Added `apps/api/go.mod`, module layout (`internal/*`, `cmd/codencil`, `db/migrations`, `apps/web` placeholders)
+- PR #2 stacked on docs PR #1
+- **Next agent:** **P0.2** on branch from `feature/p0.1-scaffold`
+
+### 2026-06-10 — Stacked PR workflow
+
+- Added `agents/STACK.md`; CONTRIBUTING/AGENTS/PR template updated for stacked PRs
+- Agents branch from previous task; maintainer merges bottom → top
 
 ### 2026-06-10 — Contributing
 

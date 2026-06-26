@@ -133,6 +133,9 @@ docker compose run --rm web npm run build
 | Port Markdown Viewer wholesale | react-markdown + fresh UI |
 | Implement approval gates | Publish + resolve threads only |
 | One giant PR / session | One `BUILD_ORDER` task |
+| Open PR to `main` for P0.2 while P0.1 still open | Stack: PR base = previous feature branch |
+| Merge your own PR | Leave open for maintainer |
+| Open PR as draft | Open ready for review |
 | Modify TypRow repo | Use published module; file issue if bug |
 | Run `go test` / `npm` on host | `docker compose run --rm api go test ./...` |
 | Assume local Go/Node installed | Docker-only; see P0.2 |
@@ -140,12 +143,16 @@ docker compose run --rm web npm run build
 
 ---
 
-## Pull requests
+## Pull requests (stacked)
 
-- One **`BUILD_ORDER` task per PR** — see [`CONTRIBUTING.md`](../CONTRIBUTING.md)
-- Use the [PR template](../.github/pull_request_template.md); include task ID (e.g. `P1.4`)
-- Update **`agents/progress.md`** in the same PR when implementation work completes
-- CI (`.github/workflows/ci.yml`) runs Docker-based checks when compose/app code exist
+Full workflow: [`agents/STACK.md`](STACK.md)
+
+- **Start every session:** `gh pr list --state open` + [`progress.md`](progress.md) stack table
+- **No open PRs** → branch from `main`, PR base `main`
+- **Open PRs** → branch from **tip of stack** (last completed task branch), PR base = that branch
+- **One `BUILD_ORDER` task per branch/PR** — open ready for review; **do not merge**
+- Update **`agents/progress.md`** Open stack table + session log
+- Use [PR template](../.github/pull_request_template.md); CI runs per PR
 
 ---
 
@@ -156,10 +163,14 @@ Copy into a new agent chat:
 ```
 Working on Codencil at C:\source\codencil.
 
-1. Read agents/CONTEXT.md, agents/AGENTS.md, agents/progress.md
-2. Execute BUILD_ORDER task: [TASK ID e.g. P1.4]
-3. Update agents/progress.md when done
-4. Do not start tasks outside that ID
+1. Read agents/CONTEXT.md, agents/STACK.md, agents/progress.md
+2. Check open PRs: gh pr list --state open
+   - None → branch from main
+   - Open stack → branch from tip (last row in progress.md stack table)
+3. Execute BUILD_ORDER task: [TASK ID]
+4. Open PR ready for review (base = main or tip branch; no `--draft`)
+5. Update agents/progress.md open stack table
+6. Do not merge
 ```
 
 ---

@@ -29,13 +29,13 @@ jobs:
         run: docker compose build
 
       - name: Run API tests
-        if: hashFiles('apps/api/go.mod') != ''
+        if: hashFiles('docker-compose.yml') != '' && hashFiles('apps/api/go.mod') != ''
         run: docker compose run --rm api go test ./...
 
       - name: Run API vet
-        if: hashFiles('apps/api/go.mod') != ''
+        if: hashFiles('docker-compose.yml') != '' && hashFiles('apps/api/go.mod') != ''
         run: docker compose run --rm api go vet ./...
 
       - name: Build web
-        if: hashFiles('apps/web/package.json') != ''
+        if: hashFiles('docker-compose.yml') != '' && hashFiles('apps/web/package.json') != ''
         run: docker compose run --rm web npm run build
