@@ -6,7 +6,7 @@
 **Last updated:** 2026-06-10  
 **Current phase:** 0 (in progress)  
 **Next task:** **P0.2** — Docker Compose dev stack  
-**Stack policy:** Stacked draft PRs — see [`STACK.md`](STACK.md)
+**Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
 ---
 
@@ -14,10 +14,12 @@
 
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
-| docs (stack workflow) | `feature/docs-stacked-pr-workflow` | `main` | [#1](https://github.com/TheBlackhowling/codencil/pull/1) | draft |
-| P0.1 | `feature/p0.1-scaffold` | `feature/docs-stacked-pr-workflow` | [#2](https://github.com/TheBlackhowling/codencil/pull/2) | draft |
+| docs (stack workflow) | `feature/docs-stacked-pr-workflow` | `main` | [#1](https://github.com/TheBlackhowling/codencil/pull/1) | open |
+| P0.1 | `feature/p0.1-scaffold` | `feature/docs-stacked-pr-workflow` | [#2](https://github.com/TheBlackhowling/codencil/pull/2) | open |
 
-*Agents: add a row when opening each draft PR. Remove or mark merged after maintainer merge.*
+*Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
+
+**Resume rule:** at session start, run `gh pr list --state open`. No open PRs → `main`. Otherwise → checkout the **tip** branch (last row above) before starting the next task.
 
 ---
 
@@ -70,16 +72,22 @@
 
 ## Session log
 
+### 2026-06-10 — PR workflow updates
+
+- No draft PRs — open ready for review
+- Resume rule: check open PRs; none → `main`, else branch from stack tip
+- Updated STACK.md, AGENTS.md, CONTRIBUTING.md, PR template
+
 ### 2026-06-10 — P0.1 scaffold (stacked)
 
 - Branch `feature/p0.1-scaffold` from `feature/docs-stacked-pr-workflow`
 - Added `apps/api/go.mod`, module layout (`internal/*`, `cmd/codencil`, `db/migrations`, `apps/web` placeholders)
-- Draft PR stacked on docs PR #1
+- PR #2 stacked on docs PR #1
 - **Next agent:** **P0.2** on branch from `feature/p0.1-scaffold`
 
 ### 2026-06-10 — Stacked PR workflow
 
-- Added `agents/STACK.md`; CONTRIBUTING/AGENTS/PR template updated for draft stacked PRs
+- Added `agents/STACK.md`; CONTRIBUTING/AGENTS/PR template updated for stacked PRs
 - Agents branch from previous task; maintainer merges bottom → top
 
 ### 2026-06-10 — Contributing

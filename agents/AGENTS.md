@@ -134,7 +134,8 @@ docker compose run --rm web npm run build
 | Implement approval gates | Publish + resolve threads only |
 | One giant PR / session | One `BUILD_ORDER` task |
 | Open PR to `main` for P0.2 while P0.1 still open | Stack: PR base = previous feature branch |
-| Merge your own PR | Draft/open for maintainer |
+| Merge your own PR | Leave open for maintainer |
+| Open PR as draft | Open ready for review |
 | Modify TypRow repo | Use published module; file issue if bug |
 | Run `go test` / `npm` on host | `docker compose run --rm api go test ./...` |
 | Assume local Go/Node installed | Docker-only; see P0.2 |
@@ -146,11 +147,11 @@ docker compose run --rm web npm run build
 
 Full workflow: [`agents/STACK.md`](STACK.md)
 
-- **One `BUILD_ORDER` task per branch/PR**
-- **P0.1** (or first unmerged task): branch from `main`, PR base **`main`**, **draft**
-- **P0.2+** while stack open: branch from previous `feature/p*-*`, PR base **previous branch**, **draft**
+- **Start every session:** `gh pr list --state open` + [`progress.md`](progress.md) stack table
+- **No open PRs** → branch from `main`, PR base `main`
+- **Open PRs** → branch from **tip of stack** (last completed task branch), PR base = that branch
+- **One `BUILD_ORDER` task per branch/PR** — open ready for review; **do not merge**
 - Update **`agents/progress.md`** Open stack table + session log
-- **Do not merge** — maintainer batch-reviews and merges bottom → top
 - Use [PR template](../.github/pull_request_template.md); CI runs per PR
 
 ---
@@ -163,9 +164,11 @@ Copy into a new agent chat:
 Working on Codencil at C:\source\codencil.
 
 1. Read agents/CONTEXT.md, agents/STACK.md, agents/progress.md
-2. Execute BUILD_ORDER task: [TASK ID]
-3. Branch from previous feature branch (or main if first in stack)
-4. Open **draft** PR with base = previous branch (or main)
+2. Check open PRs: gh pr list --state open
+   - None → branch from main
+   - Open stack → branch from tip (last row in progress.md stack table)
+3. Execute BUILD_ORDER task: [TASK ID]
+4. Open PR ready for review (base = main or tip branch; no `--draft`)
 5. Update agents/progress.md open stack table
 6. Do not merge
 ```
