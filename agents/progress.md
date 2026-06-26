@@ -5,7 +5,7 @@
 
 **Last updated:** 2026-06-10  
 **Current phase:** 1 (in progress)  
-**Next task:** **P1.2** — TypRow models + store  
+**Next task:** **P1.3** — `internal/publish` diff scaffold  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
 ---
@@ -14,7 +14,8 @@
 
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
-| P1.1 | `feature/p1.1-documents-migration` | `main` | *(opening)* | open |
+| P1.1 | `feature/p1.1-documents-migration` | `main` | [#7](https://github.com/TheBlackhowling/codencil/pull/7) | open |
+| P1.2 | `feature/p1.2-typrow-store` | `feature/p1.1-documents-migration` | *(opening)* | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
@@ -33,7 +34,7 @@
 ## Phase 1 — Read path
 
 - [x] **P1.1** Migration: documents + versions
-- [ ] **P1.2** TypRow models + store
+- [x] **P1.2** TypRow models + store
 - [ ] **P1.3** `internal/publish` diff scaffold
 - [ ] **P1.4** HTTP: document CRUD + publish v1
 - [ ] **P1.5** Web: markdown preview page
