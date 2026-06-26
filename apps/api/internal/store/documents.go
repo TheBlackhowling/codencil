@@ -1,0 +1,112 @@
+package store
+
+import (
+	"context"
+	"fmt"
+
+	"github.com/TheBlackHowling/codencil/apps/api/internal/models"
+	"github.com/TheBlackHowling/typrow"
+)
+
+// Store provides document persistence via TypRow.
+type Store struct {
+	db *typrow.DB
+}
+
+type versionNextRow struct {
+	typrow.Model
+	NextVersion int `db:"next_version"`
+}
+
+func New(db *typrow.DB) *Store {
+	return &Store{db: db}
+}
+
+type CreateDocumentInput struct {
+	OrgID         string
+	Title         string
+	DraftMarkdown string
+}
+
+func (s *Store) CreateDocument(ctx context.Context, in CreateDocumentInput) (*models.Document, error) {
+	doc := &models.Document{
+		OrgID:         in.OrgID,
+		Title:         in.Title,
+		DraftMarkdown: in.DraftMarkdown,
+	}
+	return typrow.InsertAndLoad[*models.Document](ctx, s.db, doc)
+}
+
+func (s *Store) GetDocument(ctx context.Context, id string) (*models.Document, error) {
+	doc := &models.Document{ID: id}
+	if err := typrow.Load(ctx, s.db, doc); err != nil {
+		return nil, err
+	}
+	return doc, nil
+}
+
+type UpdateDocumentDraftInput struct {
+	Title         *string
+	DraftMarkdown *string
+}
+
+func (s *Store) UpdateDocumentDraft(ctx context.Context, id string, in UpdateDocumentDraftInput) (*models.Document, error) {
+	doc, err := s.GetDocument(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if in.Title != nil {
+		doc.Title = *in.Title
+	}
+	if in.DraftMarkdown != nil {
+		doc.DraftMarkdown = *in.DraftMarkdown
+	}
+	if err := typrow.Update(ctx, s.db, doc); err != nil {
+		return nil, err
+	}
+	return s.GetDocument(ctx, id)
+}
+
+func (s *Store) PublishDocument(ctx context.Context, documentID, publishedBy string) (*models.DocumentVersion, error) {
+	var published *models.DocumentVersion
+	err := s.db.WithTx(ctx, func(tx *typrow.Tx) error {
+		doc := &models.Document{ID: documentID}
+		if err := typrow.Load(ctx, tx, doc); err != nil {
+			return err
+		}
+
+		var nextVersion int
+		row, err := typrow.QueryFirst[*versionNextRow](ctx, tx,
+			`SELECT COALESCE(MAX(version), 0) + 1 AS next_version FROM document_versions WHERE document_id = $1`,
+			documentID,
+		)
+		if err != nil {
+			return fmt.Errorf("next version: %w", err)
+		}
+		nextVersion = row.NextVersion
+
+		inserted, err := typrow.QueryFirst[*models.DocumentVersion](ctx, tx, `
+			INSERT INTO document_versions (document_id, version, markdown, published_by)
+			VALUES ($1, $2, $3, $4)
+			RETURNING document_id, version, markdown, published_at, published_by`,
+			documentID, nextVersion, doc.DraftMarkdown, publishedBy,
+		)
+		if err != nil {
+			return err
+		}
+		published = inserted
+		return nil
+	}, nil)
+	if err != nil {
+		return nil, err
+	}
+	return published, nil
+}
+
+func (s *Store) GetDocumentVersion(ctx context.Context, documentID string, version int) (*models.DocumentVersion, error) {
+	v := &models.DocumentVersion{DocumentID: documentID, Version: version}
+	if err := typrow.LoadByComposite(ctx, s.db, v, "document_version"); err != nil {
+		return nil, err
+	}
+	return v, nil
+}
