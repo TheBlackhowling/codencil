@@ -15,11 +15,11 @@
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
 | docs (stack workflow) | `feature/docs-stacked-pr-workflow` | `main` | [#1](https://github.com/TheBlackhowling/codencil/pull/1) | open |
-| P0.1 | `feature/p0.1-scaffold` | `feature/docs-stacked-pr-workflow` | [#2](https://github.com/TheBlackhowling/codencil/pull/2) | open |
+| P0.1 | `feature/p0.1-scaffold` | `feature/docs-stacked-pr-workflow` | [#2](https://github.com/TheBlackhowling/codencil/pull/2) | merged |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
-**Resume rule:** at session start, run `gh pr list --state open`. No open PRs → `main`. Otherwise → checkout the **tip** branch (last row above) before starting the next task.
+**Resume rule:** at session start, run `gh pr list --state open`. No open PRs → `main`. Otherwise → checkout **tip** branch (`feature/docs-stacked-pr-workflow` until #1 merges).
 
 ---
 
