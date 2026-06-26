@@ -5,7 +5,7 @@
 
 **Last updated:** 2026-06-10  
 **Current phase:** 0 (in progress)  
-**Next task:** **P0.3** — go-migrate wiring  
+**Next task:** **P0.4** — API skeleton  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
 ---
@@ -14,7 +14,7 @@
 
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
-| P0.2 | `feature/p0.2-docker-stack` | `main` | [#3](https://github.com/TheBlackhowling/codencil/pull/3) | open |
+| P0.3 | `feature/p0.3-migrate` | `main` | *(opening)* | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
@@ -26,7 +26,7 @@
 
 - [x] **P0.1** Repo scaffold
 - [x] **P0.2** Docker Compose dev stack (Go + Node in containers)
-- [ ] **P0.3** go-migrate wiring
+- [x] **P0.3** go-migrate wiring
 - [ ] **P0.4** API skeleton
 - [ ] **P0.5** Web skeleton
 
@@ -70,6 +70,13 @@
 ---
 
 ## Session log
+
+### 2026-06-10 — P0.3 go-migrate wiring
+
+- Seed migration `000001_init` (no-op); removed migrate `tools` profile
+- Added `migrate-up`, `migrate-down`, `migrate-reset` to Makefile and `scripts/dev.ps1`
+- CI runs migrate up / down 1 / up when migration files exist
+- **Next agent:** **P0.4** API skeleton (chi, `/health`)
 
 ### 2026-06-10 — P0.2 Docker Compose dev stack
 
