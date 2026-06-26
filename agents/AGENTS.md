@@ -147,6 +147,7 @@ docker compose run --rm web npm run build
 
 Full workflow: [`agents/STACK.md`](STACK.md)
 
+- **GitHub identity:** use **`blackhowling-bot`** for pushes and PRs — set `GH_TOKEN` from `CODENCIL_BOT_GITHUB_TOKEN` before `git push` / `gh pr create` (Cursor may need a full restart to see system env vars; agents can load User scope on Windows: `[Environment]::GetEnvironmentVariable('CODENCIL_BOT_GITHUB_TOKEN', 'User')`)
 - **Start every session:** `gh pr list --state open` + [`progress.md`](progress.md) stack table
 - **No open PRs** → branch from `main`, PR base `main`
 - **Open PRs** → branch from **tip of stack** (last completed task branch), PR base = that branch

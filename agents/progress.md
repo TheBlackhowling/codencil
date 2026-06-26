@@ -5,7 +5,7 @@
 
 **Last updated:** 2026-06-10  
 **Current phase:** 0 (in progress)  
-**Next task:** **P0.2** — Docker Compose dev stack  
+**Next task:** **P0.3** — go-migrate wiring  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
 ---
@@ -14,19 +14,18 @@
 
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
-| docs (stack workflow) | `feature/docs-stacked-pr-workflow` | `main` | [#1](https://github.com/TheBlackhowling/codencil/pull/1) | open |
-| P0.1 | `feature/p0.1-scaffold` | `feature/docs-stacked-pr-workflow` | [#2](https://github.com/TheBlackhowling/codencil/pull/2) | merged |
+| P0.2 | `feature/p0.2-docker-stack` | `main` | *(opening)* | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
-**Resume rule:** at session start, run `gh pr list --state open`. No open PRs → `main`. Otherwise → checkout **tip** branch (`feature/docs-stacked-pr-workflow` until #1 merges).
+**Resume rule:** at session start, run `gh pr list --state open`. No open PRs → `main`. Otherwise → checkout **tip** branch.
 
 ---
 
 ## Phase 0 — Project shell
 
 - [x] **P0.1** Repo scaffold
-- [ ] **P0.2** Docker Compose dev stack (Go + Node in containers)
+- [x] **P0.2** Docker Compose dev stack (Go + Node in containers)
 - [ ] **P0.3** go-migrate wiring
 - [ ] **P0.4** API skeleton
 - [ ] **P0.5** Web skeleton
@@ -71,6 +70,13 @@
 ---
 
 ## Session log
+
+### 2026-06-10 — P0.2 Docker Compose dev stack
+
+- Added `docker-compose.yml` (postgres, migrate, api, web)
+- Added `apps/api/Dockerfile`, `apps/web/Dockerfile`, `Makefile`, `scripts/dev.ps1`, `.env.example`
+- Verified: `docker compose build`, `docker compose run --rm api go version`, postgres healthy
+- **Next agent:** **P0.3** from `main` after P0.2 merges (or stack tip if PR open)
 
 ### 2026-06-10 — PR workflow updates
 
