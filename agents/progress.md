@@ -17,8 +17,9 @@
 | P2.0 | `feature/p2.0-docs-status` | `main` | [#13](https://github.com/TheBlackhowling/codencil/pull/13) | open |
 | P2.1 | `feature/p2.1-review-migration` | `feature/p2.0-docs-status` | [#14](https://github.com/TheBlackhowling/codencil/pull/14) | open |
 | P2.2 | `feature/p2.2-review-store` | `feature/p2.1-review-migration` | [#15](https://github.com/TheBlackhowling/codencil/pull/15) | open |
-| P2.3 | `feature/p2.3-comment-api` | `feature/p2.2-review-store` | *(pending)* | open |
-| P2.4 | `feature/p2.4-web-selection` | `feature/p2.3-comment-api` | *(pending)* | open |
+| P2.3 | `feature/p2.3-comment-api` | `feature/p2.2-review-store` | [#16](https://github.com/TheBlackhowling/codencil/pull/16) | open |
+| P2.4 | `feature/p2.4-web-selection` | `feature/p2.3-comment-api` | [#17](https://github.com/TheBlackhowling/codencil/pull/17) | open |
+| P2.5 | `feature/p2.5-thread-panel` | `feature/p2.4-web-selection` | [#18](https://github.com/TheBlackhowling/codencil/pull/18) | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
@@ -50,7 +51,7 @@
 - [x] **P2.2** TypRow models for review entities
 - [x] **P2.3** HTTP: comment API
 - [x] **P2.4** Web: text selection → anchor
-- [ ] **P2.5** Web: thread panel UI
+- [x] **P2.5** Web: thread panel UI
 
 ## Phase 3 — Publish v2 + anchor migration
 
@@ -75,6 +76,16 @@
 ---
 
 ## Session log
+
+### 2026-07-09 — Phase 2 review path (stack #13–#18)
+
+- P2.0: status docs sync after Phase 1 merge
+- P2.1: `000003_review` migration (threads, anchors, comments)
+- P2.2: TypRow review models + store
+- P2.3: HTTP comment API + CORS
+- P2.4: web text selection → anchor + margin display
+- P2.5: thread panel (reply, resolve, collapsed resolved)
+- **Next agent:** merge stack bottom → top, then **P3.1**
 
 ### 2026-07-09 — P2.0 docs status sync
 
