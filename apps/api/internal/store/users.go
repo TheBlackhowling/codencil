@@ -19,7 +19,7 @@ func (s *Store) GetOrCreateUser(ctx context.Context, in GetOrCreateUserInput) (*
 		FROM users WHERE org_id = $1 AND external_id = $2`,
 		in.OrgID, in.ExternalID,
 	)
-	if err == nil {
+	if err == nil && existing != nil {
 		return existing, nil
 	}
 
