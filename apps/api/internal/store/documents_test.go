@@ -26,14 +26,28 @@ func testStore(t *testing.T) *store.Store {
 	return store.New(database)
 }
 
+func testOwner(t *testing.T, s *store.Store, ctx context.Context, externalID string) string {
+	t.Helper()
+	user, err := s.GetOrCreateUser(ctx, store.GetOrCreateUserInput{
+		OrgID:      "org-test",
+		ExternalID: externalID,
+	})
+	if err != nil {
+		t.Fatalf("user: %v", err)
+	}
+	return user.ID
+}
+
 func TestDocumentCRUDAndPublish(t *testing.T) {
 	s := testStore(t)
 	ctx := context.Background()
+	ownerID := testOwner(t, s, ctx, "owner-1")
 
 	created, err := s.CreateDocument(ctx, store.CreateDocumentInput{
 		OrgID:         "org-test",
 		Title:         "Hello",
 		DraftMarkdown: "# Draft v1",
+		OwnerUserID:   ownerID,
 	})
 	if err != nil {
 		t.Fatalf("create: %v", err)

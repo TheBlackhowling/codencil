@@ -11,11 +11,13 @@ import (
 func TestReviewAnchorFlow(t *testing.T) {
 	s := testStore(t)
 	ctx := context.Background()
+	ownerID := testOwner(t, s, ctx, "owner-review")
 
 	doc, err := s.CreateDocument(ctx, store.CreateDocumentInput{
 		OrgID:         "org-review",
 		Title:         "Review doc",
 		DraftMarkdown: "# Title\n\nQuoted text here.",
+		OwnerUserID:   ownerID,
 	})
 	if err != nil {
 		t.Fatalf("create doc: %v", err)
@@ -80,11 +82,13 @@ func TestReviewAnchorFlow(t *testing.T) {
 func TestPublishRemapsAnchorsToV2(t *testing.T) {
 	s := testStore(t)
 	ctx := context.Background()
+	ownerID := testOwner(t, s, ctx, "owner-remap")
 
 	doc, err := s.CreateDocument(ctx, store.CreateDocumentInput{
 		OrgID:         "org-remap",
 		Title:         "Remap",
 		DraftMarkdown: "line one\nanchor text\nline three",
+		OwnerUserID:   ownerID,
 	})
 	if err != nil {
 		t.Fatalf("create: %v", err)

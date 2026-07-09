@@ -26,15 +26,38 @@ type CreateDocumentInput struct {
 	OrgID         string
 	Title         string
 	DraftMarkdown string
+	OwnerUserID   string
 }
 
 func (s *Store) CreateDocument(ctx context.Context, in CreateDocumentInput) (*models.Document, error) {
-	doc := &models.Document{
-		OrgID:         in.OrgID,
-		Title:         in.Title,
-		DraftMarkdown: in.DraftMarkdown,
+	var doc *models.Document
+	err := s.db.WithTx(ctx, func(tx *typrow.Tx) error {
+		created, err := typrow.InsertAndLoad[*models.Document](ctx, tx, &models.Document{
+			OrgID:         in.OrgID,
+			Title:         in.Title,
+			DraftMarkdown: in.DraftMarkdown,
+		})
+		if err != nil {
+			return err
+		}
+		if in.OwnerUserID != "" {
+			_, err = typrow.QueryFirst[*models.DocumentMember](ctx, tx, `
+				INSERT INTO document_members (document_id, user_id, role)
+				VALUES ($1, $2, $3)
+				RETURNING document_id, user_id, role, created_at`,
+				created.ID, in.OwnerUserID, models.RoleOwner,
+			)
+			if err != nil {
+				return err
+			}
+		}
+		doc = created
+		return nil
+	}, nil)
+	if err != nil {
+		return nil, err
 	}
-	return typrow.InsertAndLoad[*models.Document](ctx, s.db, doc)
+	return doc, nil
 }
 
 func (s *Store) GetDocument(ctx context.Context, id string) (*models.Document, error) {

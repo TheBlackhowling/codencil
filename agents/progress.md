@@ -62,8 +62,8 @@
 
 ## Phase 4 — Auth & roles
 
-- [ ] **P4.1** Users table + dev auth middleware
-- [ ] **P4.2** Document membership / roles
+- [x] **P4.1** Users table + dev auth middleware
+- [x] **P4.2** Document membership / roles
 - [ ] **P4.3** OIDC (optional MVP+)
 - [ ] **P4.4** Remove or gate dev auth in prod
 

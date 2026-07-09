@@ -91,6 +91,9 @@ func toAnchorResponse(item store.AnchorWithThread) anchorResponse {
 
 func (h *ReviewHandler) listAnchors(w http.ResponseWriter, r *http.Request) {
 	documentID := chi.URLParam(r, "id")
+	if !h.checkDocumentRole(w, r, documentID, roleRead...) {
+		return
+	}
 	version, err := parseVersionParam(r)
 	if err != nil {
 		writeError(w, http.StatusBadRequest, "invalid version")
@@ -120,6 +123,9 @@ type createAnchorRequest struct {
 
 func (h *ReviewHandler) createAnchor(w http.ResponseWriter, r *http.Request) {
 	documentID := chi.URLParam(r, "id")
+	if !h.checkDocumentRole(w, r, documentID, roleReview...) {
+		return
+	}
 	version, err := parseVersionParam(r)
 	if err != nil {
 		writeError(w, http.StatusBadRequest, "invalid version")
@@ -161,6 +167,9 @@ type addCommentRequest struct {
 
 func (h *ReviewHandler) addComment(w http.ResponseWriter, r *http.Request) {
 	threadID := chi.URLParam(r, "id")
+	if !h.checkThreadRole(w, r, threadID, roleReview...) {
+		return
+	}
 	var req addCommentRequest
 	if err := decodeJSON(r, &req); err != nil {
 		writeError(w, http.StatusBadRequest, "invalid JSON body")
@@ -187,6 +196,9 @@ type resolveAnchorRequest struct {
 
 func (h *ReviewHandler) resolveAnchor(w http.ResponseWriter, r *http.Request) {
 	anchorID := chi.URLParam(r, "id")
+	if !h.checkAnchorRole(w, r, anchorID, roleReview...) {
+		return
+	}
 	resolvedBy := userExternalID(r)
 
 	anchor, err := h.store.ResolveAnchor(r.Context(), anchorID, resolvedBy)
@@ -212,6 +224,9 @@ func (h *ReviewHandler) resolveAnchor(w http.ResponseWriter, r *http.Request) {
 
 func (h *ReviewHandler) reopenAnchor(w http.ResponseWriter, r *http.Request) {
 	anchorID := chi.URLParam(r, "id")
+	if !h.checkAnchorRole(w, r, anchorID, roleReview...) {
+		return
+	}
 	anchor, err := h.store.ReopenAnchor(r.Context(), anchorID)
 	if err != nil {
 		writeError(w, http.StatusNotFound, "reopen anchor failed")
