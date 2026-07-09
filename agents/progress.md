@@ -5,7 +5,7 @@
 
 **Last updated:** 2026-07-09  
 **Current phase:** Phase 1 merged; Phase 2 in progress  
-**Next task:** **P2.2** — TypRow models for review entities  
+**Next task:** **P2.3** — HTTP: comment API  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
 ---
@@ -16,6 +16,7 @@
 |---|---|---|---|---|
 | P2.0 | `feature/p2.0-docs-status` | `main` | [#13](https://github.com/TheBlackhowling/codencil/pull/13) | open |
 | P2.1 | `feature/p2.1-review-migration` | `feature/p2.0-docs-status` | [#14](https://github.com/TheBlackhowling/codencil/pull/14) | open |
+| P2.2 | `feature/p2.2-review-store` | `feature/p2.1-review-migration` | *(pending)* | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
