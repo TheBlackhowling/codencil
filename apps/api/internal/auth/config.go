@@ -23,6 +23,9 @@ func LoadConfig() Config {
 	if mode == "" {
 		mode = ModeDev
 	}
+	if mode != ModeDev && mode != ModeOIDC {
+		mode = ModeDev
+	}
 	orgID := os.Getenv("ORG_ID")
 	if orgID == "" {
 		orgID = DefaultOrgID
@@ -33,4 +36,9 @@ func LoadConfig() Config {
 		OIDCIssuer:   os.Getenv("OIDC_ISSUER"),
 		OIDCClientID: os.Getenv("OIDC_CLIENT_ID"),
 	}
+}
+
+// AllowsDevHeader reports whether X-Dev-User-Id is permitted.
+func (c Config) AllowsDevHeader() bool {
+	return c.Mode == ModeDev
 }
