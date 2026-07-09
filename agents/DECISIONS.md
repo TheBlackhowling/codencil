@@ -3,8 +3,8 @@
 > **Purpose:** Stable product & architecture decisions (changes rarely).  
 > **For implementation order:** see [`BUILD_ORDER.md`](BUILD_ORDER.md)  
 > **For agent rules:** see [`AGENTS.md`](AGENTS.md)  
-> **Last updated:** 2026-06-10  
-> **Status:** Planning complete; implementation not started (see [`progress.md`](progress.md))
+> **Last updated:** 2026-07-09  
+> **Status:** Phase 1 complete; Phase 2 in progress (see [`progress.md`](progress.md))
 
 ---
 

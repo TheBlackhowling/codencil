@@ -4,7 +4,7 @@
 
 Orientation doc for new sessions. **Read this first**, then follow links based on what you're doing.
 
-**Current phase:** Pre-implementation planning → Phase 0 scaffold  
+**Current phase:** Phase 2 — review path (margin comments on published versions)  
 **Product:** Self-hosted markdown review (margin comments, versioned publish)
 
 ---
