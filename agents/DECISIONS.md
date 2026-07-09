@@ -4,7 +4,7 @@
 > **For implementation order:** see [`BUILD_ORDER.md`](BUILD_ORDER.md)  
 > **For agent rules:** see [`AGENTS.md`](AGENTS.md)  
 > **Last updated:** 2026-07-09  
-> **Status:** Phase 1 complete; Phase 2 in progress (see [`progress.md`](progress.md))
+> **Status:** MVP complete (Phases 0–5); see [`progress.md`](progress.md)
 
 ---
 
