@@ -57,6 +57,10 @@ func toDocumentResponse(d *models.Document) documentResponse {
 const timeRFC3339 = "2006-01-02T15:04:05Z07:00"
 
 func (h *DocumentHandler) createDocument(w http.ResponseWriter, r *http.Request) {
+	user, ok := requireUser(w, r)
+	if !ok {
+		return
+	}
 	var req createDocumentRequest
 	if err := decodeJSON(r, &req); err != nil {
 		writeError(w, http.StatusBadRequest, "invalid JSON body")
@@ -67,6 +71,7 @@ func (h *DocumentHandler) createDocument(w http.ResponseWriter, r *http.Request)
 		OrgID:         defaultOrgID,
 		Title:         req.Title,
 		DraftMarkdown: req.DraftMarkdown,
+		OwnerUserID:   user.ID,
 	})
 	if err != nil {
 		writeError(w, http.StatusInternalServerError, "create document failed")
@@ -77,6 +82,9 @@ func (h *DocumentHandler) createDocument(w http.ResponseWriter, r *http.Request)
 
 func (h *DocumentHandler) getDocument(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
+	if !h.checkDocumentRole(w, r, id, roleRead...) {
+		return
+	}
 	doc, err := h.store.GetDocument(r.Context(), id)
 	if err != nil {
 		writeError(w, http.StatusNotFound, "document not found")
@@ -92,6 +100,9 @@ type patchDocumentRequest struct {
 
 func (h *DocumentHandler) patchDocument(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
+	if !h.checkDocumentRole(w, r, id, roleOwner...) {
+		return
+	}
 	var req patchDocumentRequest
 	if err := decodeJSON(r, &req); err != nil {
 		writeError(w, http.StatusBadRequest, "invalid JSON body")
@@ -133,6 +144,9 @@ func toVersionResponse(v *models.DocumentVersion) documentVersionResponse {
 
 func (h *DocumentHandler) publishDocument(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
+	if !h.checkDocumentRole(w, r, id, roleOwner...) {
+		return
+	}
 	publishedBy := userExternalID(r)
 
 	version, err := h.store.PublishDocument(r.Context(), id, publishedBy)
@@ -151,6 +165,9 @@ type versionSummaryResponse struct {
 
 func (h *DocumentHandler) listDocumentVersions(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
+	if !h.checkDocumentRole(w, r, id, roleRead...) {
+		return
+	}
 	versions, err := h.store.ListDocumentVersions(r.Context(), id)
 	if err != nil {
 		writeError(w, http.StatusNotFound, "document not found")
@@ -169,6 +186,9 @@ func (h *DocumentHandler) listDocumentVersions(w http.ResponseWriter, r *http.Re
 
 func (h *DocumentHandler) getDocumentVersion(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
+	if !h.checkDocumentRole(w, r, id, roleRead...) {
+		return
+	}
 	versionStr := chi.URLParam(r, "version")
 	version, err := strconv.Atoi(versionStr)
 	if err != nil || version < 1 {
