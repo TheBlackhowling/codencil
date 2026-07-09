@@ -36,6 +36,8 @@ services:
     environment:
       DATABASE_URL: postgres://codencil:codencil@postgres:5432/codencil?sslmode=disable
       PORT: "8080"
+      AUTH_MODE: dev
+      ORG_ID: dev
     ports:
       - "8080:8080"
     depends_on:
