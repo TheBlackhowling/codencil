@@ -14,7 +14,11 @@
 
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
-| P3.0 | `feature/p3.0-docs-status` | `main` | *(pending)* | open |
+| P3.0 | `feature/p3.0-docs-status` | `main` | *(open PR)* | open |
+| P3.1 | `feature/p3.1-anchor-remap` | `feature/p3.0-docs-status` | *(open PR)* | open |
+| P3.2 | `feature/p3.2-publish-remap` | `feature/p3.1-anchor-remap` | *(open PR)* | open |
+| P3.3 | `feature/p3.3-version-selector` | `feature/p3.2-publish-remap` | *(open PR)* | open |
+| P3.4 | `feature/p3.4-anchor-status-ux` | `feature/p3.3-version-selector` | *(open PR)* | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
