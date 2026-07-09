@@ -76,3 +76,60 @@ func TestReviewAnchorFlow(t *testing.T) {
 		t.Fatalf("reopened state = %q", reopened.ReviewState)
 	}
 }
+
+func TestPublishRemapsAnchorsToV2(t *testing.T) {
+	s := testStore(t)
+	ctx := context.Background()
+
+	doc, err := s.CreateDocument(ctx, store.CreateDocumentInput{
+		OrgID:         "org-remap",
+		Title:         "Remap",
+		DraftMarkdown: "line one\nanchor text\nline three",
+	})
+	if err != nil {
+		t.Fatalf("create: %v", err)
+	}
+
+	if _, err := s.PublishDocument(ctx, doc.ID, "author"); err != nil {
+		t.Fatalf("publish v1: %v", err)
+	}
+
+	_, err = s.CreateAnchorWithThread(ctx, store.CreateAnchorInput{
+		DocumentID: doc.ID,
+		Version:    1,
+		StartLine:  2,
+		EndLine:    2,
+		QuotedText: "anchor text",
+		AuthorID:   "reviewer",
+		Body:       "comment",
+	})
+	if err != nil {
+		t.Fatalf("anchor: %v", err)
+	}
+
+	newDraft := "line one\ninserted\nanchor text\nline three"
+	if _, err := s.UpdateDocumentDraft(ctx, doc.ID, store.UpdateDocumentDraftInput{
+		DraftMarkdown: &newDraft,
+	}); err != nil {
+		t.Fatalf("update draft: %v", err)
+	}
+
+	if _, err := s.PublishDocument(ctx, doc.ID, "author"); err != nil {
+		t.Fatalf("publish v2: %v", err)
+	}
+
+	v2Anchors, err := s.ListAnchorsByVersion(ctx, doc.ID, 2)
+	if err != nil {
+		t.Fatalf("list v2 anchors: %v", err)
+	}
+	if len(v2Anchors) != 1 {
+		t.Fatalf("v2 anchor count = %d", len(v2Anchors))
+	}
+	anchor := v2Anchors[0].Anchor
+	if anchor.AnchorStatus != models.AnchorStatusShifted {
+		t.Fatalf("status = %q", anchor.AnchorStatus)
+	}
+	if anchor.StartLine != 3 || anchor.EndLine != 3 {
+		t.Fatalf("lines = %d-%d", anchor.StartLine, anchor.EndLine)
+	}
+}

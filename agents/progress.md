@@ -5,7 +5,7 @@
 
 **Last updated:** 2026-07-09  
 **Current phase:** Phase 2 merged; Phase 3 in progress  
-**Next task:** **P3.1** — Anchor remap logic  
+**Next task:** **P3.2** — Wire publish v2+  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
 ---
@@ -50,9 +50,9 @@
 
 ## Phase 3 — Publish v2 + anchor migration
 
-- [ ] **P3.0** Docs status sync (Phase 2 merged → Phase 3 kickoff)
-- [ ] **P3.1** Anchor remap logic
-- [ ] **P3.2** Wire publish v2+
+- [x] **P3.0** Docs status sync (Phase 2 merged → Phase 3 kickoff)
+- [x] **P3.1** Anchor remap logic
+- [x] **P3.2** Wire publish v2+
 - [ ] **P3.3** HTTP + UI version selector
 - [ ] **P3.4** Orphaned anchor UX
 

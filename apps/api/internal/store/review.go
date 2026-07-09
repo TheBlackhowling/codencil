@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/TheBlackHowling/codencil/apps/api/internal/models"
+	"github.com/TheBlackHowling/codencil/apps/api/internal/publish"
 	"github.com/TheBlackHowling/typrow"
 )
 
@@ -151,4 +152,53 @@ func (s *Store) ReopenAnchor(ctx context.Context, anchorRowID string) (*models.V
 		return nil, err
 	}
 	return s.GetAnchor(ctx, anchorRowID)
+}
+
+func (s *Store) remapAnchorsToVersion(ctx context.Context, tx *typrow.Tx, previous, next *models.DocumentVersion) error {
+	prevAnchors, err := typrow.QueryAll[*models.VersionAnchor](ctx, tx, `
+		SELECT id, anchor_id, document_id, version, thread_id, start_line, end_line,
+			quoted_text, anchor_status, review_state, resolved_by, resolved_at, created_at
+		FROM version_anchors
+		WHERE document_id = $1 AND version = $2`,
+		previous.DocumentID, previous.Version,
+	)
+	if err != nil {
+		return err
+	}
+	if len(prevAnchors) == 0 {
+		return nil
+	}
+
+	inputs := make([]publish.AnchorInput, 0, len(prevAnchors))
+	for _, anchor := range prevAnchors {
+		inputs = append(inputs, publish.AnchorInput{
+			AnchorID:    anchor.AnchorID,
+			ThreadID:    anchor.ThreadID,
+			StartLine:   anchor.StartLine,
+			EndLine:     anchor.EndLine,
+			QuotedText:  anchor.QuotedText,
+			ReviewState: anchor.ReviewState,
+		})
+	}
+
+	remapped := publish.RemapAnchors(previous.Markdown, next.Markdown, inputs)
+	for i, item := range remapped {
+		source := prevAnchors[i]
+		_, err := typrow.QueryFirst[*models.VersionAnchor](ctx, tx, `
+			INSERT INTO version_anchors (
+				anchor_id, document_id, version, thread_id,
+				start_line, end_line, quoted_text,
+				anchor_status, review_state, resolved_by, resolved_at
+			)
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+			RETURNING id`,
+			item.AnchorID, next.DocumentID, next.Version, item.ThreadID,
+			item.StartLine, item.EndLine, item.QuotedText,
+			item.AnchorStatus, item.ReviewState, source.ResolvedBy, source.ResolvedAt,
+		)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

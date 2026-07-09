@@ -75,15 +75,21 @@ func (s *Store) PublishDocument(ctx context.Context, documentID, publishedBy str
 			return err
 		}
 
-		var nextVersion int
-		row, err := typrow.QueryFirst[*versionNextRow](ctx, tx,
+		var previous *models.DocumentVersion
+		prevRow, err := typrow.QueryFirst[*versionNextRow](ctx, tx,
 			`SELECT COALESCE(MAX(version), 0) + 1 AS next_version FROM document_versions WHERE document_id = $1`,
 			documentID,
 		)
 		if err != nil {
 			return fmt.Errorf("next version: %w", err)
 		}
-		nextVersion = row.NextVersion
+		nextVersion := prevRow.NextVersion
+		if nextVersion > 1 {
+			previous = &models.DocumentVersion{DocumentID: documentID, Version: nextVersion - 1}
+			if err := typrow.LoadByComposite(ctx, tx, previous, "document_version"); err != nil {
+				return fmt.Errorf("load previous version: %w", err)
+			}
+		}
 
 		inserted, err := typrow.QueryFirst[*models.DocumentVersion](ctx, tx, `
 			INSERT INTO document_versions (document_id, version, markdown, published_by)
@@ -95,6 +101,12 @@ func (s *Store) PublishDocument(ctx context.Context, documentID, publishedBy str
 			return err
 		}
 		published = inserted
+
+		if previous != nil {
+			if err := s.remapAnchorsToVersion(ctx, tx, previous, inserted); err != nil {
+				return err
+			}
+		}
 		return nil
 	}, nil)
 	if err != nil {
