@@ -4,7 +4,7 @@
 
 Orientation doc for new sessions. **Read this first**, then follow links based on what you're doing.
 
-**Current phase:** Phase 2 — review path (margin comments on published versions)  
+**Current phase:** Phase 2 complete — stack open for merge; next is Phase 3  
 **Product:** Self-hosted markdown review (margin comments, versioned publish)
 
 ---

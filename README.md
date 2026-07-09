@@ -2,7 +2,7 @@
 
 Self-hosted markdown review platform — authors publish versioned documents; reviewers comment in the margin.
 
-**Status:** Phase 1 complete (read path). Phase 2 (review path) in progress. See [`agents/progress.md`](agents/progress.md) for current task.
+**Status:** Phase 2 complete (review path). See [`agents/progress.md`](agents/progress.md) for open PR stack.
 
 **License:** [MIT](LICENSE)
 
