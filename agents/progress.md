@@ -3,8 +3,8 @@
 > **Agents:** Update this file at the end of every session.  
 > **Source of truth for "what's next"** — see `BUILD_ORDER.md` for task definitions.
 
-**Last updated:** 2026-06-10  
-**Current phase:** 1 complete (stack open for merge)  
+**Last updated:** 2026-07-09  
+**Current phase:** Phase 1 merged; Phase 2 in progress  
 **Next task:** **P2.1** — Migration: threads, comments, anchors  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
@@ -14,12 +14,7 @@
 
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
-| P1.1 | `feature/p1.1-documents-migration` | `main` | [#7](https://github.com/TheBlackhowling/codencil/pull/7) | open |
-| P1.2 | `feature/p1.2-typrow-store` | `feature/p1.1-documents-migration` | [#8](https://github.com/TheBlackhowling/codencil/pull/8) | open |
-| P1.3 | `feature/p1.3-publish-scaffold` | `feature/p1.2-typrow-store` | [#9](https://github.com/TheBlackhowling/codencil/pull/9) | open |
-| P1.4 | `feature/p1.4-document-api` | `feature/p1.3-publish-scaffold` | [#10](https://github.com/TheBlackhowling/codencil/pull/10) | open |
-| P1.5 | `feature/p1.5-web-preview` | `feature/p1.4-document-api` | [#11](https://github.com/TheBlackhowling/codencil/pull/11) | open |
-| P1.6 | `feature/p1.6-phase1-smoke` | `feature/p1.5-web-preview` | [#12](https://github.com/TheBlackhowling/codencil/pull/12) | open |
+| P2.0 | `feature/p2.0-docs-status` | `main` | *(pending)* | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
@@ -46,6 +41,7 @@
 
 ## Phase 2 — Review path
 
+- [ ] **P2.0** Docs status sync (Phase 1 merged → Phase 2 kickoff)
 - [ ] **P2.1** Migration: threads, comments, anchors
 - [ ] **P2.2** TypRow models for review entities
 - [ ] **P2.3** HTTP: comment API
@@ -75,6 +71,12 @@
 ---
 
 ## Session log
+
+### 2026-07-09 — P2.0 docs status sync
+
+- Synced `progress.md`, `README.md`, `CONTEXT.md` after Phase 1 stack merged (#7–#12)
+- Open stack table reset for Phase 2
+- **Next agent:** P2.1 from tip of stack after P2.0 PR opens
 
 ### 2026-06-10 — Phase 1 read path (stack #7–#12)
 
