@@ -4,8 +4,8 @@
 > **Source of truth for "what's next"** — see `BUILD_ORDER.md` for task definitions.
 
 **Last updated:** 2026-07-09  
-**Current phase:** Phase 1 merged; Phase 2 in progress  
-**Next task:** **P2.5** — Web: thread panel UI  
+**Current phase:** Phase 2 complete (stack open for merge)  
+**Next task:** **P3.1** — Anchor remap logic  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
 ---
