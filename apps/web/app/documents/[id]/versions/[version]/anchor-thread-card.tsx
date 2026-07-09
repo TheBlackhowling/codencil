@@ -9,8 +9,19 @@ type Props = {
   onUpdated: () => Promise<void>;
 };
 
+function statusBadge(status: string) {
+  if (status === "shifted") {
+    return { label: "Shifted", bg: "#fef3c7", color: "#92400e", border: "#fcd34d" };
+  }
+  if (status === "orphaned") {
+    return { label: "Orphaned", bg: "#fee2e2", color: "#991b1b", border: "#fca5a5" };
+  }
+  return null;
+}
+
 export function AnchorThreadCard({ anchor, onUpdated }: Props) {
   const isResolved = anchor.review_state === "resolved";
+  const badge = statusBadge(anchor.anchor_status);
   const [expanded, setExpanded] = useState(!isResolved);
   const [replyBody, setReplyBody] = useState("");
   const [busy, setBusy] = useState(false);
@@ -35,13 +46,31 @@ export function AnchorThreadCard({ anchor, onUpdated }: Props) {
   return (
     <article
       style={{
-        border: "1px solid #e5e7eb",
+        border: `1px solid ${badge?.border ?? "#e5e7eb"}`,
         borderRadius: "8px",
         padding: "0.75rem",
-        background: isResolved ? "#f9fafb" : "#fff",
+        background: isResolved ? "#f9fafb" : badge?.bg ?? "#fff",
         opacity: isResolved && !expanded ? 0.85 : 1,
       }}
     >
+      {badge && (
+        <p
+          style={{
+            margin: "0 0 0.5rem",
+            display: "inline-block",
+            fontSize: "0.6875rem",
+            fontWeight: 600,
+            textTransform: "uppercase",
+            letterSpacing: "0.04em",
+            padding: "0.125rem 0.375rem",
+            borderRadius: "4px",
+            background: badge.bg,
+            color: badge.color,
+          }}
+        >
+          {badge.label}
+        </p>
+      )}
       <button
         type="button"
         onClick={() => setExpanded((v) => !v)}
@@ -74,10 +103,30 @@ export function AnchorThreadCard({ anchor, onUpdated }: Props) {
         {!expanded && firstComment && (
           <p style={{ margin: 0, fontSize: "0.875rem", color: "#4b5563" }}>{firstComment.body}</p>
         )}
+        {!expanded && anchor.anchor_status === "orphaned" && (
+          <p style={{ margin: "0.5rem 0 0", fontSize: "0.8125rem", color: "#991b1b" }}>
+            Quoted text is no longer in this version.
+          </p>
+        )}
+        {!expanded && anchor.anchor_status === "shifted" && (
+          <p style={{ margin: "0.5rem 0 0", fontSize: "0.8125rem", color: "#92400e" }}>
+            Anchor moved after a new publish.
+          </p>
+        )}
       </button>
 
       {expanded && (
         <div style={{ marginTop: "0.5rem" }}>
+          {anchor.anchor_status === "orphaned" && (
+            <p style={{ margin: "0 0 0.75rem", fontSize: "0.8125rem", color: "#991b1b" }}>
+              This comment&apos;s quoted text was removed in this version. Thread history is preserved.
+            </p>
+          )}
+          {anchor.anchor_status === "shifted" && (
+            <p style={{ margin: "0 0 0.75rem", fontSize: "0.8125rem", color: "#92400e" }}>
+              Line numbers updated after publish — review the new placement above.
+            </p>
+          )}
           <ul style={{ listStyle: "none", margin: "0 0 0.75rem", padding: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
             {anchor.comments.map((comment) => (
               <li key={comment.id} style={{ fontSize: "0.875rem" }}>

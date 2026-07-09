@@ -4,8 +4,8 @@
 > **Source of truth for "what's next"** — see `BUILD_ORDER.md` for task definitions.
 
 **Last updated:** 2026-07-09  
-**Current phase:** Phase 2 merged; Phase 3 in progress  
-**Next task:** **P3.3** — HTTP + UI version selector  
+**Current phase:** Phase 3 complete (stack open for merge)  
+**Next task:** **P4.1** — Users table + dev auth middleware  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
 ---
@@ -54,7 +54,7 @@
 - [x] **P3.1** Anchor remap logic
 - [x] **P3.2** Wire publish v2+
 - [x] **P3.3** HTTP + UI version selector
-- [ ] **P3.4** Orphaned anchor UX
+- [x] **P3.4** Orphaned anchor UX
 
 ## Phase 4 — Auth & roles
 
@@ -72,6 +72,11 @@
 ---
 
 ## Session log
+
+### 2026-07-09 — Phase 3 publish v2 + anchor migration (stack starting)
+
+- P3.0–P3.4: remap logic, publish wiring, version selector, status badges
+- **Next agent:** merge stack #19+ bottom → top, then **P4.1**
 
 ### 2026-07-09 — Phase 2 merged; Phase 3 kickoff
 
