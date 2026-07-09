@@ -14,14 +14,13 @@
 
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
-| P3.4 | `feature/p3.4-anchor-status-ux` | `feature/p3.3-version-selector` | *(merged or open)* | — |
-| P4.1 | `feature/p4.1-dev-auth` | `feature/p3.4-anchor-status-ux` | *(open PR)* | open |
-| P4.2 | `feature/p4.2-document-roles` | `feature/p4.1-dev-auth` | *(open PR)* | open |
-| P4.3 | `feature/p4.3-oidc` | `feature/p4.2-document-roles` | *(open PR)* | open |
-| P4.4 | `feature/p4.4-auth-gate` | `feature/p4.3-oidc` | *(open PR)* | open |
-| P5.1 | `feature/p5.1-prod-compose` | `feature/p4.4-auth-gate` | *(open PR)* | open |
-| P5.2 | `feature/p5.2-self-host-readme` | `feature/p5.1-prod-compose` | *(open PR)* | open |
-| P5.3 | `feature/p5.3-github-publish` | `feature/p5.2-self-host-readme` | *(open PR)* | open |
+| P4.1 | `feature/p4.1-dev-auth` | `feature/p3.4-anchor-status-ux` | [#19](https://github.com/TheBlackhowling/codencil/pull/19) | open |
+| P4.2 | `feature/p4.2-document-roles` | `feature/p4.1-dev-auth` | [#20](https://github.com/TheBlackhowling/codencil/pull/20) | open |
+| P4.3 | `feature/p4.3-oidc` | `feature/p4.2-document-roles` | [#21](https://github.com/TheBlackhowling/codencil/pull/21) | open |
+| P4.4 | `feature/p4.4-auth-gate` | `feature/p4.3-oidc` | [#22](https://github.com/TheBlackhowling/codencil/pull/22) | open |
+| P5.1 | `feature/p5.1-prod-compose` | `feature/p4.4-auth-gate` | [#23](https://github.com/TheBlackhowling/codencil/pull/23) | open |
+| P5.2 | `feature/p5.2-self-host-readme` | `feature/p5.1-prod-compose` | [#24](https://github.com/TheBlackhowling/codencil/pull/24) | open |
+| P5.3 | `feature/p5.3-github-publish` | `feature/p5.2-self-host-readme` | [#25](https://github.com/TheBlackhowling/codencil/pull/25) | open |
 
 *Merge order: P3 stack (if not merged) → P4.1 → … → P5.3*
 
