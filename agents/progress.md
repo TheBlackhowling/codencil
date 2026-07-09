@@ -14,7 +14,7 @@
 
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
-| P2.0 | `feature/p2.0-docs-status` | `main` | *(pending)* | open |
+| P2.0 | `feature/p2.0-docs-status` | `main` | [#13](https://github.com/TheBlackhowling/codencil/pull/13) | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
@@ -41,8 +41,8 @@
 
 ## Phase 2 — Review path
 
-- [ ] **P2.0** Docs status sync (Phase 1 merged → Phase 2 kickoff)
-- [ ] **P2.1** Migration: threads, comments, anchors
+- [x] **P2.0** Docs status sync (Phase 1 merged → Phase 2 kickoff)
+- [x] **P2.1** Migration: threads, comments, anchors
 - [ ] **P2.2** TypRow models for review entities
 - [ ] **P2.3** HTTP: comment API
 - [ ] **P2.4** Web: text selection → anchor
