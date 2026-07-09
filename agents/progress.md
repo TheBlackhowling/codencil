@@ -4,8 +4,8 @@
 > **Source of truth for "what's next"** — see `BUILD_ORDER.md` for task definitions.
 
 **Last updated:** 2026-06-10  
-**Current phase:** 0 complete (pending stack merge)  
-**Next task:** **P1.1** — Migration: documents + versions  
+**Current phase:** 1 (in progress)  
+**Next task:** **P1.2** — TypRow models + store  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
 ---
@@ -14,9 +14,7 @@
 
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
-| P0.3 | `feature/p0.3-migrate` | `main` | [#4](https://github.com/TheBlackhowling/codencil/pull/4) | open |
-| P0.4 | `feature/p0.4-api-skeleton` | `feature/p0.3-migrate` | [#5](https://github.com/TheBlackhowling/codencil/pull/5) | open |
-| P0.5 | `feature/p0.5-web-skeleton` | `feature/p0.4-api-skeleton` | [#6](https://github.com/TheBlackhowling/codencil/pull/6) | open |
+| P1.1 | `feature/p1.1-documents-migration` | `main` | *(opening)* | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
@@ -34,7 +32,7 @@
 
 ## Phase 1 — Read path
 
-- [ ] **P1.1** Migration: documents + versions
+- [x] **P1.1** Migration: documents + versions
 - [ ] **P1.2** TypRow models + store
 - [ ] **P1.3** `internal/publish` diff scaffold
 - [ ] **P1.4** HTTP: document CRUD + publish v1
