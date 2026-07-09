@@ -5,7 +5,7 @@
 
 **Last updated:** 2026-07-09  
 **Current phase:** Phase 2 merged; Phase 3 in progress  
-**Next task:** **P3.2** — Wire publish v2+  
+**Next task:** **P3.3** — HTTP + UI version selector  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
 ---
@@ -53,7 +53,7 @@
 - [x] **P3.0** Docs status sync (Phase 2 merged → Phase 3 kickoff)
 - [x] **P3.1** Anchor remap logic
 - [x] **P3.2** Wire publish v2+
-- [ ] **P3.3** HTTP + UI version selector
+- [x] **P3.3** HTTP + UI version selector
 - [ ] **P3.4** Orphaned anchor UX
 
 ## Phase 4 — Auth & roles

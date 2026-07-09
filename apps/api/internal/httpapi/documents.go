@@ -25,6 +25,7 @@ func (h *DocumentHandler) Register(r chi.Router) {
 	r.Get("/documents/{id}", h.getDocument)
 	r.Patch("/documents/{id}", h.patchDocument)
 	r.Post("/documents/{id}/publish", h.publishDocument)
+	r.Get("/documents/{id}/versions", h.listDocumentVersions)
 	r.Get("/documents/{id}/versions/{version}", h.getDocumentVersion)
 }
 
@@ -147,6 +148,30 @@ func (h *DocumentHandler) publishDocument(w http.ResponseWriter, r *http.Request
 		return
 	}
 	writeJSON(w, http.StatusCreated, toVersionResponse(version))
+}
+
+type versionSummaryResponse struct {
+	Version     int    `json:"version"`
+	PublishedAt string `json:"published_at"`
+	PublishedBy string `json:"published_by"`
+}
+
+func (h *DocumentHandler) listDocumentVersions(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	versions, err := h.store.ListDocumentVersions(r.Context(), id)
+	if err != nil {
+		writeError(w, http.StatusNotFound, "document not found")
+		return
+	}
+	out := make([]versionSummaryResponse, 0, len(versions))
+	for _, v := range versions {
+		out = append(out, versionSummaryResponse{
+			Version:     v.Version,
+			PublishedAt: v.PublishedAt.UTC().Format(timeRFC3339),
+			PublishedBy: v.PublishedBy,
+		})
+	}
+	writeJSON(w, http.StatusOK, out)
 }
 
 func (h *DocumentHandler) getDocumentVersion(w http.ResponseWriter, r *http.Request) {

@@ -33,6 +33,22 @@ export type VersionSnapshot = {
 
 const apiBase = () => process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
 
+export type VersionSummary = {
+  version: number;
+  published_at: string;
+  published_by: string;
+};
+
+export async function fetchVersions(documentId: string): Promise<VersionSummary[]> {
+  const res = await fetch(`${apiBase()}/documents/${documentId}/versions`, {
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    throw new Error(`fetch versions failed (${res.status})`);
+  }
+  return res.json();
+}
+
 export async function fetchAnchors(documentId: string, version: number): Promise<Anchor[]> {
   const res = await fetch(`${apiBase()}/documents/${documentId}/versions/${version}/anchors`, {
     cache: "no-store",

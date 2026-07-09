@@ -115,6 +115,20 @@ func (s *Store) PublishDocument(ctx context.Context, documentID, publishedBy str
 	return published, nil
 }
 
+func (s *Store) ListDocumentVersions(ctx context.Context, documentID string) ([]*models.DocumentVersion, error) {
+	doc := &models.Document{ID: documentID}
+	if err := typrow.Load(ctx, s.db, doc); err != nil {
+		return nil, err
+	}
+	return typrow.QueryAll[*models.DocumentVersion](ctx, s.db, `
+		SELECT document_id, version, markdown, published_at, published_by
+		FROM document_versions
+		WHERE document_id = $1
+		ORDER BY version DESC`,
+		documentID,
+	)
+}
+
 func (s *Store) GetDocumentVersion(ctx context.Context, documentID string, version int) (*models.DocumentVersion, error) {
 	v := &models.DocumentVersion{DocumentID: documentID, Version: version}
 	if err := typrow.LoadByComposite(ctx, s.db, v, "document_version"); err != nil {

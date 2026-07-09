@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import {
   Anchor,
   VersionSnapshot,
+  VersionSummary,
   createAnchor,
   fetchAnchors,
   lineRangeFromSelection,
@@ -14,9 +15,10 @@ import { AnchorThreadCard } from "./anchor-thread-card";
 
 type Props = {
   snapshot: VersionSnapshot;
+  versions: VersionSummary[];
 };
 
-export function DocumentReviewView({ snapshot }: Props) {
+export function DocumentReviewView({ snapshot, versions }: Props) {
   const previewRef = useRef<HTMLDivElement>(null);
   const [anchors, setAnchors] = useState<Anchor[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -80,9 +82,35 @@ export function DocumentReviewView({ snapshot }: Props) {
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: "1.5rem", alignItems: "start" }}>
       <section>
-        <p style={{ color: "#666", marginBottom: "1rem" }}>
-          Document {snapshot.document_id} · v{snapshot.version} · published by {snapshot.published_by}
-        </p>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+          <p style={{ color: "#666", margin: 0 }}>
+            Document {snapshot.document_id} · published by {snapshot.published_by}
+          </p>
+          {versions.length > 0 && (
+            <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.875rem" }}>
+              Version
+              <select
+                value={snapshot.version}
+                onChange={(e) => {
+                  const next = e.target.value;
+                  window.location.href = `/documents/${snapshot.document_id}/versions/${next}`;
+                }}
+                style={{ padding: "0.25rem 0.5rem" }}
+              >
+                {versions.map((v) => (
+                  <option key={v.version} value={v.version}>
+                    v{v.version} ({new Date(v.published_at).toLocaleDateString()})
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
+          {versions.length > 1 && (
+            <span style={{ fontSize: "0.8125rem", color: "#888" }}>
+              {versions.length} published versions — anchors are per version
+            </span>
+          )}
+        </div>
         <p style={{ fontSize: "0.875rem", color: "#888", marginBottom: "1rem" }}>
           Select text in the preview to add a margin comment.
         </p>
