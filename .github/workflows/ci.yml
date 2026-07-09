@@ -62,3 +62,11 @@ jobs:
       - name: Build web
         if: hashFiles('docker-compose.yml') != '' && hashFiles('apps/web/package.json') != ''
         run: docker compose run --rm web sh -c "npm install && npm run build"
+
+      - name: Validate production compose
+        if: hashFiles('docker-compose.prod.yml') != ''
+        run: |
+          docker compose -f docker-compose.prod.yml config
+          POSTGRES_PASSWORD=test OIDC_ISSUER=https://example.com OIDC_CLIENT_ID=test \
+            DATABASE_URL=postgres://codencil:test@postgres:5432/codencil?sslmode=disable \
+            docker compose -f docker-compose.prod.yml build
