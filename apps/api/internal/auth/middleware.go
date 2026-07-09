@@ -2,6 +2,7 @@ package auth
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/TheBlackHowling/codencil/apps/api/internal/models"
@@ -31,27 +32,32 @@ func NewMiddleware(s *store.Store, cfg Config) (*Middleware, error) {
 
 func (m *Middleware) Handler(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		user, status, msg := m.authenticate(r)
-		if status != 0 {
-			writeAuthError(w, status, msg)
+		user, err := m.authenticate(r)
+		if err != nil {
+			var ae authError
+			if errors.As(err, &ae) {
+				writeAuthError(w, ae.status, ae.message)
+				return
+			}
+			writeAuthError(w, http.StatusInternalServerError, "auth failed")
 			return
 		}
 		next.ServeHTTP(w, r.WithContext(WithUser(r.Context(), user)))
 	})
 }
 
-func (m *Middleware) authenticate(r *http.Request) (*models.User, int, string) {
+func (m *Middleware) authenticate(r *http.Request) (*models.User, error) {
 	switch m.config.Mode {
 	case ModeDev:
 		return m.authenticateDev(r)
 	case ModeOIDC:
 		return m.authenticateOIDC(r)
 	default:
-		return nil, http.StatusInternalServerError, "invalid AUTH_MODE"
+		return nil, authError{status: http.StatusInternalServerError, message: "invalid AUTH_MODE"}
 	}
 }
 
-func (m *Middleware) authenticateDev(r *http.Request) (*models.User, int, string) {
+func (m *Middleware) authenticateDev(r *http.Request) (*models.User, error) {
 	externalID := r.Header.Get(devUserHeader)
 	if externalID == "" {
 		externalID = DefaultDevUserID
@@ -61,9 +67,9 @@ func (m *Middleware) authenticateDev(r *http.Request) (*models.User, int, string
 		ExternalID: externalID,
 	})
 	if err != nil {
-		return nil, http.StatusInternalServerError, "auth failed"
+		return nil, err
 	}
-	return user, 0, ""
+	return user, nil
 }
 
 func writeAuthError(w http.ResponseWriter, status int, message string) {
