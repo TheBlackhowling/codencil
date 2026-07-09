@@ -9,8 +9,6 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-const defaultAuthorID = "dev-user"
-
 // ReviewHandler serves anchor and comment endpoints.
 type ReviewHandler struct {
 	store *store.Store
@@ -138,10 +136,7 @@ func (h *ReviewHandler) createAnchor(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	authorID := req.AuthorID
-	if authorID == "" {
-		authorID = devUserID(r)
-	}
+	authorID := userExternalID(r)
 
 	created, err := h.store.CreateAnchorWithThread(r.Context(), store.CreateAnchorInput{
 		DocumentID: documentID,
@@ -176,10 +171,7 @@ func (h *ReviewHandler) addComment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	authorID := req.AuthorID
-	if authorID == "" {
-		authorID = devUserID(r)
-	}
+	authorID := userExternalID(r)
 
 	comment, err := h.store.AddComment(r.Context(), threadID, authorID, req.Body)
 	if err != nil {
@@ -195,14 +187,7 @@ type resolveAnchorRequest struct {
 
 func (h *ReviewHandler) resolveAnchor(w http.ResponseWriter, r *http.Request) {
 	anchorID := chi.URLParam(r, "id")
-	resolvedBy := devUserID(r)
-	var req resolveAnchorRequest
-	if r.Body != nil && r.ContentLength != 0 {
-		_ = decodeJSON(r, &req)
-	}
-	if req.ResolvedBy != "" {
-		resolvedBy = req.ResolvedBy
-	}
+	resolvedBy := userExternalID(r)
 
 	anchor, err := h.store.ResolveAnchor(r.Context(), anchorID, resolvedBy)
 	if err != nil {
@@ -254,11 +239,4 @@ func parseVersionParam(r *http.Request) (int, error) {
 		return 0, err
 	}
 	return version, nil
-}
-
-func devUserID(r *http.Request) string {
-	if id := r.Header.Get("X-Dev-User-Id"); id != "" {
-		return id
-	}
-	return defaultAuthorID
 }

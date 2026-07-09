@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/TheBlackHowling/codencil/apps/api/internal/auth"
 	"github.com/TheBlackHowling/codencil/apps/api/internal/db"
 	"github.com/TheBlackHowling/codencil/apps/api/internal/httpapi"
 	"github.com/TheBlackHowling/codencil/apps/api/internal/store"
@@ -33,6 +34,12 @@ func main() {
 	docHandler := httpapi.NewDocumentHandler(docStore)
 	reviewHandler := httpapi.NewReviewHandler(docStore)
 
+	authCfg := auth.LoadConfig()
+	authMW, err := auth.NewMiddleware(docStore, authCfg)
+	if err != nil {
+		log.Fatalf("auth middleware: %v", err)
+	}
+
 	r := chi.NewRouter()
 	r.Use(httpapi.CORSMiddleware)
 	r.Use(middleware.RequestID)
@@ -40,8 +47,11 @@ func main() {
 	r.Use(middleware.Logger)
 
 	r.Get("/health", httpapi.Health)
-	docHandler.Register(r)
-	reviewHandler.Register(r)
+	r.Group(func(r chi.Router) {
+		r.Use(authMW.Handler)
+		docHandler.Register(r)
+		reviewHandler.Register(r)
+	})
 
 	addr := ":" + port
 	log.Printf("codencil api listening on %s", addr)
