@@ -133,14 +133,7 @@ func toVersionResponse(v *models.DocumentVersion) documentVersionResponse {
 
 func (h *DocumentHandler) publishDocument(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
-	publishedBy := "dev-user"
-	var req publishDocumentRequest
-	if r.Body != nil && r.ContentLength != 0 {
-		_ = decodeJSON(r, &req)
-	}
-	if req.PublishedBy != "" {
-		publishedBy = req.PublishedBy
-	}
+	publishedBy := userExternalID(r)
 
 	version, err := h.store.PublishDocument(r.Context(), id, publishedBy)
 	if err != nil {
