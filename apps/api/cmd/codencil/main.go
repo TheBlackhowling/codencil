@@ -31,14 +31,17 @@ func main() {
 
 	docStore := store.New(database)
 	docHandler := httpapi.NewDocumentHandler(docStore)
+	reviewHandler := httpapi.NewReviewHandler(docStore)
 
 	r := chi.NewRouter()
+	r.Use(httpapi.CORSMiddleware)
 	r.Use(middleware.RequestID)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Logger)
 
 	r.Get("/health", httpapi.Health)
 	docHandler.Register(r)
+	reviewHandler.Register(r)
 
 	addr := ":" + port
 	log.Printf("codencil api listening on %s", addr)
