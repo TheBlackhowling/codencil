@@ -5,7 +5,7 @@
 
 **Last updated:** 2026-07-09  
 **Current phase:** Phase 1 merged; Phase 2 in progress  
-**Next task:** **P2.1** — Migration: threads, comments, anchors  
+**Next task:** **P2.2** — TypRow models for review entities  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
 ---
@@ -15,6 +15,7 @@
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
 | P2.0 | `feature/p2.0-docs-status` | `main` | [#13](https://github.com/TheBlackhowling/codencil/pull/13) | open |
+| P2.1 | `feature/p2.1-review-migration` | `feature/p2.0-docs-status` | [#14](https://github.com/TheBlackhowling/codencil/pull/14) | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
@@ -43,7 +44,7 @@
 
 - [x] **P2.0** Docs status sync (Phase 1 merged → Phase 2 kickoff)
 - [x] **P2.1** Migration: threads, comments, anchors
-- [ ] **P2.2** TypRow models for review entities
+- [x] **P2.2** TypRow models for review entities
 - [ ] **P2.3** HTTP: comment API
 - [ ] **P2.4** Web: text selection → anchor
 - [ ] **P2.5** Web: thread panel UI
