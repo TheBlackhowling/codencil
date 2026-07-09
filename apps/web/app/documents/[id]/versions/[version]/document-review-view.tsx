@@ -10,6 +10,7 @@ import {
   fetchAnchors,
   lineRangeFromSelection,
 } from "./review-api";
+import { AnchorThreadCard } from "./anchor-thread-card";
 
 type Props = {
   snapshot: VersionSnapshot;
@@ -148,26 +149,7 @@ export function DocumentReviewView({ snapshot }: Props) {
         )}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
           {anchors.map((anchor) => (
-            <article
-              key={anchor.id}
-              style={{
-                border: "1px solid #e5e7eb",
-                borderRadius: "8px",
-                padding: "0.75rem",
-                background: anchor.review_state === "resolved" ? "#f3f4f6" : "#fff",
-              }}
-            >
-              <p style={{ margin: "0 0 0.25rem", fontSize: "0.75rem", color: "#6b7280" }}>
-                Lines {anchor.start_line}–{anchor.end_line}
-                {anchor.review_state === "resolved" ? " · resolved" : ""}
-              </p>
-              <blockquote style={{ margin: "0 0 0.5rem", fontSize: "0.8125rem", color: "#374151", borderLeft: "2px solid #d1d5db", paddingLeft: "0.5rem" }}>
-                {anchor.quoted_text}
-              </blockquote>
-              {anchor.comments[0] && (
-                <p style={{ margin: 0, fontSize: "0.875rem" }}>{anchor.comments[0].body}</p>
-              )}
-            </article>
+            <AnchorThreadCard key={anchor.id} anchor={anchor} onUpdated={loadAnchors} />
           ))}
         </div>
       </aside>
