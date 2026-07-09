@@ -4,7 +4,7 @@
 > **Source of truth for "what's next"** — see `BUILD_ORDER.md` for task definitions.
 
 **Last updated:** 2026-07-09  
-**Current phase:** Phase 2 complete (stack open for merge)  
+**Current phase:** Phase 2 merged; Phase 3 in progress  
 **Next task:** **P3.1** — Anchor remap logic  
 **Stack policy:** Stacked PRs (ready for review, not draft) — see [`STACK.md`](STACK.md)
 
@@ -14,12 +14,7 @@
 
 | Task | Branch | PR base | PR | Status |
 |---|---|---|---|---|
-| P2.0 | `feature/p2.0-docs-status` | `main` | [#13](https://github.com/TheBlackhowling/codencil/pull/13) | open |
-| P2.1 | `feature/p2.1-review-migration` | `feature/p2.0-docs-status` | [#14](https://github.com/TheBlackhowling/codencil/pull/14) | open |
-| P2.2 | `feature/p2.2-review-store` | `feature/p2.1-review-migration` | [#15](https://github.com/TheBlackhowling/codencil/pull/15) | open |
-| P2.3 | `feature/p2.3-comment-api` | `feature/p2.2-review-store` | [#16](https://github.com/TheBlackhowling/codencil/pull/16) | open |
-| P2.4 | `feature/p2.4-web-selection` | `feature/p2.3-comment-api` | [#17](https://github.com/TheBlackhowling/codencil/pull/17) | open |
-| P2.5 | `feature/p2.5-thread-panel` | `feature/p2.4-web-selection` | [#18](https://github.com/TheBlackhowling/codencil/pull/18) | open |
+| P3.0 | `feature/p3.0-docs-status` | `main` | *(pending)* | open |
 
 *Agents: add a row when opening each PR. Remove or mark merged after maintainer merge.*
 
@@ -55,6 +50,7 @@
 
 ## Phase 3 — Publish v2 + anchor migration
 
+- [ ] **P3.0** Docs status sync (Phase 2 merged → Phase 3 kickoff)
 - [ ] **P3.1** Anchor remap logic
 - [ ] **P3.2** Wire publish v2+
 - [ ] **P3.3** HTTP + UI version selector
@@ -77,36 +73,21 @@
 
 ## Session log
 
+### 2026-07-09 — Phase 2 merged; Phase 3 kickoff
+
+- Phase 2 stack #13–#18 merged to `main`
+- No open PRs; local repo synced to `main`
+- **Next agent:** P3.1 from tip after P3.0 PR opens
+
 ### 2026-07-09 — Phase 2 review path (stack #13–#18)
 
-- P2.0: status docs sync after Phase 1 merge
-- P2.1: `000003_review` migration (threads, anchors, comments)
-- P2.2: TypRow review models + store
-- P2.3: HTTP comment API + CORS
-- P2.4: web text selection → anchor + margin display
-- P2.5: thread panel (reply, resolve, collapsed resolved)
-- **Next agent:** merge stack bottom → top, then **P3.1**
-
-### 2026-07-09 — P2.0 docs status sync
-
-- Synced `progress.md`, `README.md`, `CONTEXT.md` after Phase 1 stack merged (#7–#12)
-- Open stack table reset for Phase 2
-- **Next agent:** P2.1 from tip of stack after P2.0 PR opens
+- P2.0–P2.5: full review path (migration → store → API → web)
+- **Merged:** #13 → #18
 
 ### 2026-06-10 — Phase 1 read path (stack #7–#12)
 
-- P1.1: `000002_documents` migration
-- P1.2: TypRow document store + integration tests
-- P1.3: `internal/publish` line diff scaffold
-- P1.4: document CRUD + publish HTTP API
-- P1.5: Next.js markdown preview route
-- P1.6: `scripts/phase1-smoke.ps1`
-- **Next agent:** merge stack bottom → top, then **P2.1**
-
-### 2026-06-10 — P0.5 Web skeleton
-
-- Next.js 15 App Router home page with NEXT_PUBLIC_API_URL display
-- Web dev service: npm install + next dev in compose
+- P1.1–P1.6: document CRUD, publish v1, preview, smoke script
+- **Merged:** #7 → #12
 
 ---
 
