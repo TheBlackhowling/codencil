@@ -1,0 +1,63 @@
+# Production-style compose (no dev volume mounts). Requires OIDC env vars.
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-codencil}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-codencil}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-codencil} -d ${POSTGRES_DB:-codencil}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    image: migrate/migrate:v4.18.2
+    volumes:
+      - ./db/migrations:/migrations:ro
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    entrypoint: ["migrate"]
+    command: ["-path", "/migrations", "-database", "${DATABASE_URL}", "up"]
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: prod
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      PORT: "8080"
+      AUTH_MODE: oidc
+      ORG_ID: ${ORG_ID:-default}
+      OIDC_ISSUER: ${OIDC_ISSUER:?set OIDC_ISSUER}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:?set OIDC_CLIENT_ID}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      target: prod
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8080}
+      PORT: "3000"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:

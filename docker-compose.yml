@@ -30,6 +30,7 @@ services:
     build:
       context: .
       dockerfile: apps/api/Dockerfile
+      target: dev
     volumes:
       - ./apps/api:/app
     working_dir: /app
@@ -49,6 +50,7 @@ services:
     build:
       context: .
       dockerfile: apps/web/Dockerfile
+      target: dev
     volumes:
       - ./apps/web:/app
     working_dir: /app
