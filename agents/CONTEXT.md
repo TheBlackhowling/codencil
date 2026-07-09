@@ -4,7 +4,7 @@
 
 Orientation doc for new sessions. **Read this first**, then follow links based on what you're doing.
 
-**Current phase:** Phase 3 — publish v2 + anchor migration  
+**Current phase:** Phase 5 — self-host polish (MVP complete after merge)  
 **Product:** Self-hosted markdown review (margin comments, versioned publish)
 
 ---

@@ -69,7 +69,7 @@
 
 ## Phase 5 — Self-host polish
 
-- [ ] **P5.1** Production compose + CI
+- [x] **P5.1** Production compose + CI
 - [ ] **P5.2** README self-host guide
 - [ ] **P5.3** GitHub publish — repo live; CI on PRs; branch protection optional
 
